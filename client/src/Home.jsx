@@ -3,10 +3,11 @@ import Navbar from './Navbar';
 
 function Home() {
     return(
-        <div>
-            <Navbar />
-            <h2>This will be the HomePage!!</h2>
-        </div>
+       <div className='containerHome'>
+            <Navbar>
+                
+            </Navbar>
+       </div>
     );
 }
 

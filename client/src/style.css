@@ -8,6 +8,14 @@ body, input{
     font-family: 'Poppins', sans-serif;
 }
 
+.containerHome{
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #415a77;
+    overflow: hidden;
+}
+
 .container{
     position: relative;
     width: 100%;
