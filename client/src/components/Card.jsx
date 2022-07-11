@@ -1,12 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
 
 function Card(){
     const [password, setPassword] = useState("");
     const [title, setTitle] = useState("");
+    const [passwordList, setPasswordList] = useState([])
+
+    useEffect(() => {
+        Axios.get('http://localhost:3001/showpassword').then((response) => {
+            setPasswordList(response.data)
+        });
+    }, []);
 
     const addPassword = () => {
-        Axios.post('http://localhost:3000/addpassword', {
+        Axios.post('http://localhost:3001/addpassword', {
             password: password,
             title: title
         });
@@ -25,7 +32,6 @@ function Card(){
         
         <div className="Card">
             <div className="AddingPassword">
-
                 <input
                 type="text"
                 placeholder="Es.: Password1234"
@@ -41,8 +47,14 @@ function Card(){
                 }}
             />
                 <button onClick={addPassword}> Save</button>
-
              </div>
+
+            <div className="Passwords"> 
+                {passwordList.map((val) => {
+                    return <h1> {val.title} </h1>
+                })}
+            </div>
+
         </div>
     )
 }

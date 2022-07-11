@@ -1,6 +1,12 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 5000;
+const cors = require('cors');
+const PORT = 3001;
+
+const {encrypt, decrypt} = require("./EncryptionHandler")
+
+app.use(cors())
+app.use(express.json());
 
 const mysql = require('mysql')
 const db = mysql.createConnection({
@@ -11,9 +17,10 @@ const db = mysql.createConnection({
 });
 
 app.post("/addpassword", (req, res) => { //Richiesta POST, dovrò fare una richiesta API
-  const {password, title} = req.body
+  const {password, title} = req.body;
+  const hashedPassword = encrypt(password);
 
-  db.query("INSERT INTO Passwords (Password, Title) VALUES (?, ?)", [password, title], (err, result) => { //Faccio la Insert e mi salvo eventuali errori in "err"
+  db.query("INSERT INTO Passwords (Password, Title, IV) VALUES (?, ?, ?)", [hashedPassword.password, title, hashedPassword.iv], (err, result) => { //Faccio la Insert e mi salvo eventuali errori in "err"
     if (err) {
       console.log(err) //Se ci sono errori li mostro in console
     } else {
@@ -21,6 +28,16 @@ app.post("/addpassword", (req, res) => { //Richiesta POST, dovrò fare una richi
     }
   })
 
+});
+
+app.get('/showpassword', (req, res) => {
+  db.query('SELECT * FROM Passwords;', (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result)
+    }
+  })
 });
 
 // Mostra il Messaggio che il Server è Attivo su una specifica Porta
