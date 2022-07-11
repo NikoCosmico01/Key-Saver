@@ -1,12 +1,14 @@
 import React from 'react';
-import Navbar from './Navbar';
+import Navbar from './components/Navbar';
+import Card from './components/Card';
 
 function Home() {
     return(
        <div className='containerHome'>
-            <Navbar>
-                
-            </Navbar>
+            <Navbar/>
+            <div className='row'>
+                <Card/>
+            </div>
        </div>
     );
 }
