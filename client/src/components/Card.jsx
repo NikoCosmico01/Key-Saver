@@ -1,3 +1,6 @@
+import { useState } from "react";
+import Axios from "axios";
+
 function Card(){
     const [password, setPassword] = useState("");
     const [title, setTitle] = useState("");
