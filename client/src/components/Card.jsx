@@ -49,13 +49,15 @@ function Card(){
                 <button onClick={addPassword}> Save</button>
              </div>
 
-            <div className="Passwords"> 
-                {passwordList.map((val) => {
-                    return <h1> {val.title} </h1>
-                })}
-            </div>
-
         </div>
+
+        /*<div className="Passwords"> //VA INSERITO NEL DIV SOPRA PER MOSTRARE I SITI CHE HANNO LA PW SALVATA
+                {passwordList.map((val) => {
+                    return <div className="Password">
+                        <h1> {val.title} </h1>
+                        </div>
+                })}
+            </div>*/
     )
 }
 
