@@ -1,8 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-//const PORT = 3001;
-const port = process.env.PORT || 3000;
+const port = 3001;
 const {encrypt, decrypt} = require("./EncryptionHandler")
 
 app.use(cors())
@@ -38,6 +37,10 @@ app.get('/showpassword', (req, res) => {
       res.send(result)
     }
   })
+});
+
+app.post('/decryptpassword', (req, res) => {
+  res.send(decrypt(req.body))
 });
 
 // Mostra il Messaggio che il Server è Attivo su una specifica Porta
