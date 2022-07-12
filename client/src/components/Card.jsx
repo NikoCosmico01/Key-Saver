@@ -19,17 +19,11 @@ function Card(){
         });
     };
 
-    return(
-    
-        /*<div className="card" style={{width: '18rem', textAlign: 'center' }}>
-            <img className="card-img-top" src="..." alt="Card image cap"/>
-            <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" className="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>*/
-        
+    const decryptPassword = (encryption) => {
+        Axios.post('http://localhost:3001/', { password: encryption.password, iv: encryption.iv });
+    };
+
+    return(       
         <div className="Card">
             <div className="AddingPassword">
                 <input
@@ -48,16 +42,19 @@ function Card(){
             />
                 <button onClick={addPassword}> Save</button>
              </div>
-
+             <div className="Passwords">
+                {passwordList.map((val, key) => {
+                    return <div className="Password" onClick={() => {decryptPassword({password: val.password, iv: val.iv});
+                }}
+                key={key}
+                > 
+                    <h1> {val.title} </h1>
+                    </div>
+                })}
+            </div>
         </div>
 
-        /*<div className="Passwords"> //VA INSERITO NEL DIV SOPRA PER MOSTRARE I SITI CHE HANNO LA PW SALVATA
-                {passwordList.map((val) => {
-                    return <div className="Password">
-                        <h1> {val.title} </h1>
-                        </div>
-                })}
-            </div>*/
+       
     )
 }
 
