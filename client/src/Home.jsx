@@ -1,15 +1,12 @@
 import React from 'react';
+import { Box } from '@mui/material';
 import Navbar from './components/Navbar';
-import Card from './components/Card';
 
 function Home() {
     return(
-       <div className='containerHome'>
+        <Box>
             <Navbar/>
-            <div className='row'>
-                <Card/>
-            </div>
-       </div>
+        </Box>
     );
 }
 

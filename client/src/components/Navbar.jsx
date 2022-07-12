@@ -1,18 +1,65 @@
-import icon from './../icon.jpg';
+import * as React from 'react';
+import {Stack, AppBar, Toolbar, styled, Typography, Box, Tooltip, IconButton, Avatar, Menu, MenuItem} from '@mui/material';
+import { Key } from '@mui/icons-material';
+import SearchItem from './SearchItem';
 
-function navbar() {
-    return (
-        <nav className="navbar navbar-dark bg-dark">
-            <div className="container-fluid">
-                <div className='d-flex justify-content-start align-items-center'>
-                    <div className='w-25'>
-                        <img src={icon} width="35" height="35"/>
-                    </div>
-                    <span className="navbar-brand ms-3 h1" style={{textAlign: 'center'}}> Key Saver </span>
-                </div>
-            </div>
-        </nav>
-    );
-}
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-export default navbar;
+const StyledToolBar = styled(Toolbar)({
+  display: "flex",
+  justifyContent: "space-between",
+});
+
+const Navbar = () => {
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+  
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  return (
+    <AppBar position="sticky">
+      <StyledToolBar>
+        <Stack direction="row" spacing={2} alignItems="center" sx={{ flexGrow: 0 }}>
+          <Key/>
+          <Typography variant='h6'>Key Saver</Typography>
+        </Stack>
+        <Stack direction="row" spacing={3} alignItems="center" sx={{ flexGrow: 0 }}>
+            <SearchItem/>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar/>
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Stack>
+      </StyledToolBar>
+    </AppBar>
+  );
+};
+export default Navbar;

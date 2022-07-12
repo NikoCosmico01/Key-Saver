@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Route, Routes} from 'react-router-dom';
 import Home from "./Home";
 import Login from "./Login";
-import SignUp from "./SignUp"
 
 class App extends Component {
 state = {
@@ -29,9 +28,8 @@ state = {
     return (
       <div className="App">
       <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
     );
