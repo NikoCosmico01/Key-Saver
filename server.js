@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const port = 3001;
+
+const PORT = process.env.PORT || 8080;
+
 const {encrypt, decrypt} = require("./EncryptionHandler")
 
 app.use(cors())
@@ -13,6 +15,11 @@ const db = mysql.createConnection({
   host: 'localhost',
   password: '',
   database: 'PasswordManager'
+});
+
+app.post("/post", (req, res) => {
+  console.log("Connesso a React");
+  res.redirect("/");
 });
 
 app.post("/addpassword", (req, res) => { //Richiesta POST, dovrò fare una richiesta API
@@ -44,7 +51,7 @@ app.post('/decryptpassword', (req, res) => {
 });
 
 // Mostra il Messaggio che il Server è Attivo su una specifica Porta
-app.listen(port, () => console.log(`In ascolto sulla Porta ${port}`));
+app.listen(PORT, () => console.log(`In ascolto sulla Porta ${PORT}`));
 
 // crea un Percorso GET
 app.get('/express_backend', (req, res) => {
