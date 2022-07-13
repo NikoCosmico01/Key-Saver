@@ -8,6 +8,7 @@ const {encrypt, decrypt} = require("./EncryptionHandler")
 
 app.use(cors())
 app.use(express.json());
+var router = express.Router();
 
 const mysql = require('mysql')
 const db = mysql.createConnection({
