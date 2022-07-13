@@ -34,7 +34,7 @@ const Search = styled('div')(({ theme }) => ({
       // vertical padding + font size from searchIcon
       paddingLeft: `calc(1em + ${theme.spacing(4)})`,
       transition: theme.transitions.create('width'),
-      width: '100%',
+      width: '10ch',
       [theme.breakpoints.up('sm')]: {
         width: '20ch',
         '&:focus': {

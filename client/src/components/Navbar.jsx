@@ -2,8 +2,7 @@ import * as React from 'react';
 import {Stack, AppBar, Toolbar, styled, Typography, Box, Tooltip, IconButton, Avatar, Menu, MenuItem} from '@mui/material';
 import { Key } from '@mui/icons-material';
 import SearchItem from './SearchItem';
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import { useState } from 'react';
 
 const StyledToolBar = styled(Toolbar)({
   display: "flex",
@@ -11,15 +10,7 @@ const StyledToolBar = styled(Toolbar)({
 });
 
 const Navbar = () => {
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-  
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  const [open, setOpen] = useState(false);
 
   return (
     <AppBar position="sticky">
@@ -31,14 +22,15 @@ const Navbar = () => {
         <Stack direction="row" spacing={3} alignItems="center" sx={{ flexGrow: 0 }}>
             <SearchItem/>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar/>
+              <IconButton onClick={e=>setOpen(true)} sx={{ p: 0 }}>
+                <Avatar sx={{ bgcolor: 'dark'}}> AO </Avatar>
               </IconButton>
             </Tooltip>
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
-              anchorEl={anchorElUser}
+              open={open}
+              onClose={e=>setOpen(false)}
               anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
@@ -48,14 +40,9 @@ const Navbar = () => {
                 vertical: 'top',
                 horizontal: 'right',
               }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem /*Onclick*/ > Profile </MenuItem>
+              <MenuItem /*Onclick*/ > Logout </MenuItem>
             </Menu>
           </Stack>
       </StyledToolBar>
