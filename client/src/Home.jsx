@@ -1,18 +1,27 @@
 import React from 'react';
-import { Box, Container, Grid } from '@mui/material';
+import { Avatar, Box, Container, Grid, IconButton } from '@mui/material';
 import Navbar from './components/Navbar';
 import AccountCard from './components/AccountCard';
+import AddAccount from './components/AddAccount';
 
 function Home() {
     return(
         <Box>
             <Navbar/>
-            <Grid rowSpacing={1} columnSpacing={2}>
-                <AccountCard/>
-                <AccountCard/>
-                <AccountCard/>
-                <AccountCard/>
-            </Grid>
+            <Container sx={{mt: 4, mb: 4}}>
+                <Grid container justifyContent="center" alignItems="center" spacing={3}>
+                    <AccountCard/>
+                    <AccountCard/>
+                    <AccountCard/>
+                    <AccountCard/>
+                    <AccountCard/>
+                    <AccountCard/>
+                    <AccountCard/>
+                    <AccountCard/>
+                    <AccountCard/>
+                </Grid>     
+            </Container>
+            <AddAccount/>
         </Box>
     );
 }

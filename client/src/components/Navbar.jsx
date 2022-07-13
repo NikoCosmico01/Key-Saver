@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {Stack, AppBar, Toolbar, styled, Typography, Box, Tooltip, IconButton, Avatar, Menu, MenuItem} from '@mui/material';
+import {Stack, AppBar, Toolbar, styled, Typography, Box, Tooltip, IconButton, Avatar, Menu, MenuItem, Divider} from '@mui/material';
 import { Key } from '@mui/icons-material';
 import SearchItem from './SearchItem';
 import { useState } from 'react';
+import FormDialog from './FormDialog';
 
 const StyledToolBar = styled(Toolbar)({
   display: "flex",
@@ -10,6 +11,7 @@ const StyledToolBar = styled(Toolbar)({
 });
 
 const Navbar = () => {
+
   const [open, setOpen] = useState(false);
 
   return (
@@ -42,6 +44,7 @@ const Navbar = () => {
               }}
             >
               <MenuItem /*Onclick*/ > Profile </MenuItem>
+              <Divider variant="middle"/>
               <MenuItem /*Onclick*/ > Logout </MenuItem>
             </Menu>
           </Stack>
