@@ -19,9 +19,10 @@ function Home() {
                     <AccountCard/>
                     <AccountCard/>
                     <AccountCard/>
-                </Grid>     
+                </Grid>
+                <AddAccount/>     
             </Container>
-            <AddAccount/>
+            
         </Box>
     );
 }

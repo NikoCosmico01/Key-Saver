@@ -7,16 +7,16 @@ import AddIcon from '@mui/icons-material/Add';
 
 export default function AddAccount() {
   return (
-    <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>
-        <SpeedDial
-            ariaLabel='addAccount'
-            sx={{ position: 'absolute', bottom: 16, right: 16 }}
-            icon={<SpeedDialIcon />}
-        >
-        <SpeedDialAction>
-            <AddIcon/>
-        </SpeedDialAction>
-      </SpeedDial>
-    </Box>
+      <SpeedDial
+          ariaLabel='addAccount'
+          sx={{ position: 'fixed', bottom: 16, right: 16 }}
+          icon={<SpeedDialIcon />}
+      >
+      <SpeedDialAction
+      key={'add'}
+      icon={<AddIcon/>}
+      tooltipTitle={'add'}
+      />
+    </SpeedDial>
   );
 }
