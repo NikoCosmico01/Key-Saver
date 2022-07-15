@@ -11,7 +11,8 @@ import { red } from '@mui/material/colors';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Component } from 'react';
-import { Grid } from '@mui/material';
+import { Divider, Grid } from '@mui/material';
+import TextField from '@mui/material/TextField';
 
 export default class AccountCard extends Component{
   render() {
@@ -32,7 +33,23 @@ export default class AccountCard extends Component{
             title={this.props.title}
           />
           <CardContent>
-            
+            <Divider/>
+            <TextField
+              id="filled-read-only-input"
+              size="small"
+              InputProps={{
+                readOnly: true,
+              }}
+              variant="outlined"
+            />
+            <TextField
+              id="filled-read-only-input"
+              size="small"
+              InputProps={{
+                readOnly: true,
+              }}
+              variant="outlined"
+            />
           </CardContent>
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">

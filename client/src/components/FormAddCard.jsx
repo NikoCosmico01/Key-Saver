@@ -11,7 +11,7 @@ import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Container, Divider, FormControl, IconButton, Input, InputAdornment, InputLabel, Stack, Typography } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Close, Done, Save, Visibility, VisibilityOff } from '@mui/icons-material';
 import Axios from "axios";
 import ModeIcon from '@mui/icons-material/Mode';
 
@@ -23,7 +23,8 @@ export default function FormAddCard() {
     mail: "",
     user: "",
     password: "",
-    name: "Add new Account"
+    name: "Add new Account",
+    changedName: ""
   });
 
   const [flags, setFlags] = React.useState({
@@ -33,6 +34,7 @@ export default function FormAddCard() {
 
   const handleClickOpen = () => {
     setOpen(true);
+    values.name = "Add new Account";
   };
 
   const handleClose = () => {
@@ -40,12 +42,9 @@ export default function FormAddCard() {
   };
 
   const addPassword = () => {
-<<<<<<< Updated upstream
-=======
-    console.log(values)
->>>>>>> Stashed changes
     Axios.post('http://localhost:5000/addpassword', {web: values.web, user: values.user, password: values.password});
     setOpen(false);
+    flags.editNameField = false;
   };
 
   const handleChange = (prop) => (event) => {
@@ -64,7 +63,25 @@ export default function FormAddCard() {
   };
 
   const handleClickEditName = () => {
+    setFlags({
+      ...flags,
+      editNameField: !flags.editNameField,
+    });
+  };
 
+  const handleDoneEditName = () => {
+    setFlags({
+      ...flags,
+      editNameField: !flags.editNameField,
+    });
+    values.name = values.changedName;
+  };
+
+  const handleCloseEditName = () => {
+    setFlags({
+      ...flags,
+      editNameField: !flags.editNameField,
+    });
   };
 
   return (
@@ -82,12 +99,30 @@ export default function FormAddCard() {
         />
       </SpeedDial>
       <Dialog open={open} onClose={handleClose} fullWidth>
-        <Stack direction="row" alignItems="center" justifyContent="flex-start">
+      {!flags.editNameField ? (<Stack direction="row" alignItems="center" justifyContent="flex-start">
           <DialogTitle> {values.name} </DialogTitle>
           <IconButton size='small' onClick={handleClickEditName}>
             <ModeIcon/>
           </IconButton>
-        </Stack>
+        </Stack>) : (<Stack direction="row" alignItems="center" justifyContent="flex-start">
+          <TextField
+            sx={{ml:2, mt:2, mb:2}}
+            placeholder="Name"
+            defaultValue={values.name}
+            size='small'
+            autoFocus
+            id="name"
+            type="text"
+            variant='standard'
+            onChange={handleChange('changedName')}
+          />
+          <IconButton onClick={handleDoneEditName}>
+            <Done/>
+          </IconButton>
+          <IconButton onClick={handleCloseEditName}>
+            <Close/>
+          </IconButton>
+        </Stack>)}
         <Divider/>
         <DialogContent>
           <Stack direction="row" spacing={2} alignItems="center">
@@ -147,7 +182,8 @@ export default function FormAddCard() {
 
         </DialogContent>
         <DialogActions>
-          <Button onClick={addPassword}>Save</Button>
+          <Button size="large" onClick={addPassword}> <Save/> Save</Button>
+          <Button size="large" color="error" onClick={handleClose}>Cancel</Button>
         </DialogActions>
       </Dialog>
     </>
