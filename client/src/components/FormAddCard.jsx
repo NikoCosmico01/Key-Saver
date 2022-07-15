@@ -17,8 +17,10 @@ export default function FormAddCard() {
   const [open, setOpen] = React.useState(false);
 
   const [values, setValues] = React.useState({
-    password: '',
     showPassword: false,
+    web: "",
+    user: "",
+    password: ""
   });
 
   const handleClickOpen = () => {
@@ -26,6 +28,11 @@ export default function FormAddCard() {
   };
 
   const handleClose = () => {
+    setOpen(false);
+  };
+
+  const addPassword = () => {
+    Axios.post('http://localhost:5000/addpassword', {web: values.web, user: values.user, password: values.password});
     setOpen(false);
   };
 
@@ -73,6 +80,7 @@ export default function FormAddCard() {
               type="website"
               fullWidth
               variant="standard"
+              onChange={handleChange('web')}
             />
           </Stack>
           <Typography sx={{mt:3}}>Account</Typography>
@@ -84,6 +92,7 @@ export default function FormAddCard() {
               fullWidth
               variant="standard"
               margin="dense"
+              onChange={} //DEVO METTERE MAIL
             />
             <TextField
               id="username"
@@ -92,6 +101,7 @@ export default function FormAddCard() {
               fullWidth
               variant="standard"
               margin="dense"
+              onChange={handleChange('user')}
             />
             <FormControl variant="standard" fullWidth margin="dense">
               <InputLabel htmlFor="password">Password</InputLabel>
@@ -117,7 +127,7 @@ export default function FormAddCard() {
 
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Save</Button>
+          <Button onClick={addPassword}>Save</Button>
         </DialogActions>
       </Dialog>
     </>

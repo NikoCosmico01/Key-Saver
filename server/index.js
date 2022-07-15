@@ -55,7 +55,7 @@ function App() {
   const [password, setPassword] = useState("");
   
   const addPassword = () => {
-    Axios.post('http://localhost:5000/addpassword', {web: web, user: user, password: password})
+    Axios.post('http://localhost:5000/addpassword', {web: web, user: user, password: password});
   };
 
   NELL'INPUT DEL Sito Web
