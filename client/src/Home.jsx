@@ -2,8 +2,8 @@ import React from 'react';
 import { Avatar, Box, Card, Container, Grid, IconButton } from '@mui/material';
 import Navbar from './components/Navbar';
 import AccountCard from './components/AccountCard';
-import AddAccount from './components/AddAccount';
 import { Component } from 'react';
+import FormAddCard from './components/FormAddCard';
 
 class Home extends Component {
     state = {
@@ -12,7 +12,12 @@ class Home extends Component {
             {id: 1, title: "Twitter", firstChar: "T"},
             {id: 2, title: "Google", firstChar: "G"},
             {id: 3, title: "Linkedn", firstChar: "L"},
-            {id: 4, title: "Twitch", firstChar: "T"}
+            {id: 4, title: "Twitch", firstChar: "T"},
+            {id: 5, title: "Twitch", firstChar: "T"},
+            {id: 6, title: "Twitch", firstChar: "T"},
+            {id: 7, title: "Twitch", firstChar: "T"},
+            {id: 8, title: "Twitch", firstChar: "T"},
+            {id: 9, title: "Twitch", firstChar: "T"}
         ]}
     render() {
         return(
@@ -26,9 +31,9 @@ class Home extends Component {
                             title={card.title}
                             firstchar={card.firstChar} />
                         ))}
-                    </Grid>
-                    <AddAccount/>     
+                    </Grid>    
                 </Container>
+                <FormAddCard/> 
                 
             </Box>
         );
