@@ -10,7 +10,7 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import AddIcon from '@mui/icons-material/Add';
-import { Box, Divider, FormControl, IconButton, Input, InputAdornment, InputLabel, Stack, Typography } from '@mui/material';
+import { Box, Container, Divider, FormControl, IconButton, Input, InputAdornment, InputLabel, Stack, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 export default function FormAddCard() {
@@ -19,6 +19,7 @@ export default function FormAddCard() {
   const [values, setValues] = React.useState({
     showPassword: false,
     web: "",
+    mail: "",
     user: "",
     password: ""
   });
@@ -32,7 +33,8 @@ export default function FormAddCard() {
   };
 
   const addPassword = () => {
-    Axios.post('http://localhost:5000/addpassword', {web: values.web, user: values.user, password: values.password});
+    console.log(values)
+    //Axios.post('http://localhost:5000/addpassword', {web: values.web, user: values.user, password: values.password});
     setOpen(false);
   };
 
@@ -83,8 +85,8 @@ export default function FormAddCard() {
               onChange={handleChange('web')}
             />
           </Stack>
-          <Typography sx={{mt:3}}>Account</Typography>
-          <Box>
+          <Container sx={{mt: 4}}>
+            <Typography>Account</Typography>
             <TextField
               id="email"
               label="Email Address"
@@ -92,7 +94,7 @@ export default function FormAddCard() {
               fullWidth
               variant="standard"
               margin="dense"
-              onChange={} //DEVO METTERE MAIL
+              onChange={handleChange('mail')}
             />
             <TextField
               id="username"
@@ -123,7 +125,7 @@ export default function FormAddCard() {
                 }
               />
             </FormControl>
-          </Box>
+          </Container>
 
         </DialogContent>
         <DialogActions>
