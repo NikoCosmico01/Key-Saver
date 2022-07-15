@@ -40,6 +40,10 @@ export default function FormAddCard() {
   };
 
   const addPassword = () => {
+<<<<<<< Updated upstream
+=======
+    console.log(values)
+>>>>>>> Stashed changes
     Axios.post('http://localhost:5000/addpassword', {web: values.web, user: values.user, password: values.password});
     setOpen(false);
   };

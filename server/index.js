@@ -35,10 +35,10 @@ app.get("/post", (req, res) => { //Test
 });
 
 app.post("/addpassword", (req, res) => { //Richiesta POST, dovrò fare una richiesta API
-  const {web, user, password} = req.body;
+  const {name, web, mail, user, password} = req.body;
   const hashedPassword = encrypt(password);
 
-  db.query("INSERT INTO Passwords (Web, User, Password, IV) VALUES (?, ?, ?, ?)", [web, user, hashedPassword.password, hashedPassword.iv], (err, result) => { //Faccio la Insert e mi salvo eventuali errori in "err"
+  db.query("INSERT INTO Passwords (Name, Web, Mail, User, Password, IV) VALUES (?, ?, ?, ?, ?, ?)", [name, web, mail, user, hashedPassword.password, hashedPassword.iv], (err, result) => { //Faccio la Insert e mi salvo eventuali errori in "err"
     if (err) {
       console.log(err) //Se ci sono errori li mostro in console
     } else {
