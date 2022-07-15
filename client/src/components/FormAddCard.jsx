@@ -12,16 +12,23 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Container, Divider, FormControl, IconButton, Input, InputAdornment, InputLabel, Stack, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import Axios from "axios";
+import ModeIcon from '@mui/icons-material/Mode';
 
 export default function FormAddCard() {
   const [open, setOpen] = React.useState(false);
 
   const [values, setValues] = React.useState({
-    showPassword: false,
     web: "",
     mail: "",
     user: "",
-    password: ""
+    password: "",
+    name: "Add new Account"
+  });
+
+  const [flags, setFlags] = React.useState({
+    showPassword: false,
+    editNameField: false
   });
 
   const handleClickOpen = () => {
@@ -33,8 +40,7 @@ export default function FormAddCard() {
   };
 
   const addPassword = () => {
-    console.log(values)
-    //Axios.post('http://localhost:5000/addpassword', {web: values.web, user: values.user, password: values.password});
+    Axios.post('http://localhost:5000/addpassword', {web: values.web, user: values.user, password: values.password});
     setOpen(false);
   };
 
@@ -43,14 +49,18 @@ export default function FormAddCard() {
   };
 
   const handleClickShowPassword = () => {
-    setValues({
+    setFlags({
       ...values,
-      showPassword: !values.showPassword,
+      showPassword: !flags.showPassword,
     });
   };
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
+  };
+
+  const handleClickEditName = () => {
+
   };
 
   return (
@@ -68,7 +78,12 @@ export default function FormAddCard() {
         />
       </SpeedDial>
       <Dialog open={open} onClose={handleClose} fullWidth>
-        <DialogTitle>Add new Account</DialogTitle>
+        <Stack direction="row" alignItems="center" justifyContent="flex-start">
+          <DialogTitle> {values.name} </DialogTitle>
+          <IconButton size='small' onClick={handleClickEditName}>
+            <ModeIcon/>
+          </IconButton>
+        </Stack>
         <Divider/>
         <DialogContent>
           <Stack direction="row" spacing={2} alignItems="center">
@@ -109,17 +124,16 @@ export default function FormAddCard() {
               <InputLabel htmlFor="password">Password</InputLabel>
               <Input
                 id="password"
-                type={values.showPassword ? 'text' : 'password'}
-                value={values.password}
+                type={flags.showPassword ? 'text' : 'password'}
                 onChange={handleChange('password')}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
-                      aria-label="toggle password visibility"
+                      aria-label="passwordVisibility"
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
                     >
-                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                      {flags.showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 }
