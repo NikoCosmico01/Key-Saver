@@ -12,12 +12,7 @@ class Home extends Component {
             {id: 1, title: "Twitter", firstChar: "T"},
             {id: 2, title: "Google", firstChar: "G"},
             {id: 3, title: "Linkedn", firstChar: "L"},
-            {id: 4, title: "Twitch", firstChar: "T"},
-            {id: 5, title: "Twitch", firstChar: "T"},
-            {id: 6, title: "Twitch", firstChar: "T"},
-            {id: 7, title: "Twitch", firstChar: "T"},
-            {id: 8, title: "Twitch", firstChar: "T"},
-            {id: 9, title: "Twitch", firstChar: "T"}
+            {id: 4, title: "Twitch", firstChar: "T"}
         ]}
     render() {
         return(

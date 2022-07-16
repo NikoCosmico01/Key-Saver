@@ -3,6 +3,7 @@ import {Stack, AppBar, Toolbar, styled, Typography, Box, Tooltip, IconButton, Av
 import { Key } from '@mui/icons-material';
 import SearchItem from './SearchItem';
 import { useState } from 'react';
+import ProfileDialog from './ProfileDialog';
 
 const StyledToolBar = styled(Toolbar)({
   display: "flex",
@@ -11,7 +12,7 @@ const StyledToolBar = styled(Toolbar)({
 
 const Navbar = () => {
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
 
   return (
     <AppBar position="sticky">
@@ -24,7 +25,7 @@ const Navbar = () => {
             <SearchItem/>
             <Tooltip title="Open settings">
               <IconButton onClick={e=>setOpen(true)} sx={{ p: 0 }}>
-                <Avatar sx={{ bgcolor: 'dark'}}> AO </Avatar>
+                  <Avatar sx={{ bgcolor: 'dark'}}> AO </Avatar>
               </IconButton>
             </Tooltip>
             <Menu
