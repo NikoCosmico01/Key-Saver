@@ -3,7 +3,7 @@ const secret = 'pprvbraumutjsrssaizxyvvlgllojzlw' //32
 
 const encrypt = (password) => {
     const iv = Buffer.from(crypto.randomBytes(16)); //Ho un Buffer con 16 Byte Randomici
-    const cypher = crypto.createCipheriv('aes-256-ctr', Buffer.from(secret), iv);
+    const cipher = crypto.createCipheriv('aes-256-ctr', Buffer.from(secret), iv);
 
     const encryptedPassword = Buffer.concat([cipher.update(password),cipher.final()]); //Ottengo la Password Criptata (ma ancora Bufferizzata)
 
