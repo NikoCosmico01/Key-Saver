@@ -41,7 +41,7 @@ export default function FormAddCard() {
   };
 
   const addPassword = () => {
-    Axios.post('http://localhost:5000/addpassword', {web: values.web, user: values.user, password: values.password});
+    Axios.post('http://localhost:5000/addpassword', {name: values.name, web: values.web, mail:values.mail, user: values.user, password: values.password});
     setOpen(false);
     flags.editNameField = false;
   };

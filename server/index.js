@@ -48,41 +48,13 @@ app.post("/addpassword", (req, res) => { //Richiesta POST, dovrò fare una richi
 
 });
 
-/* Per Aggiungere una PW
-function App() {
-  const [web, setWeb] = useState("");
-  const [user, setUser] = useState("");
-  const [password, setPassword] = useState("");
-  
-  const addPassword = () => {
-    Axios.post('http://localhost:5000/addpassword', {web: web, user: user, password: password});
-  };
-
-  NELL'INPUT DEL Sito Web
-  onChange={(event) => {
-    setWeb(event.target.value)
-  }}
-
-  NELL'INPUT DELL'USER
-  onChange={(event) => {
-    setUser(event.target.value)
-  }}
-
-  NELL'INPUT DELLA PASSW
-  onChange={(event) => {
-    setPassword(event.target.value)
-  }}
-
-  NEL BOTTONE
-  onClick={addPassword}
-
-*/
-
-app.get('/showpassword', (req, res) => {
-  db.query('SELECT * FROM Passwords;', (err, result) => {
+app.get(`/search`, (req, res) => {
+  //const id = 1;
+  db.query(`SELECT * FROM Passwords`, (err, result) => {
     if (err) {
       console.log(err);
     } else {
+      console.log(result)
       res.send(result)
     }
   })
