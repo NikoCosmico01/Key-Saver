@@ -4,8 +4,25 @@ import Navbar from './components/Navbar';
 import AccountCard from './components/AccountCard';
 import { Component } from 'react';
 import FormAddCard from './components/FormAddCard';
+import axios from 'axios';
 
 class Home extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            sessionId: "",
+            account: []
+        }
+    }
+
+    componentDidMount(){
+        fetchAccount()
+    }
+
+    fetchAccount(){
+        axios.get("/", )
+    }
+
     state = {
         cards:[
             {id: 0, title: "Amazon", username: "", password: ""},
