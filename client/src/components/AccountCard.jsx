@@ -9,10 +9,26 @@ import { red } from '@mui/material/colors';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Component } from 'react';
-import { Divider, Grid } from '@mui/material';
+import { Divider, Grid, InputAdornment, OutlinedInput } from '@mui/material';
 import TextField from '@mui/material/TextField';
+import { TramRounded, Visibility, VisibilityOff } from '@mui/icons-material';
 
 export default class AccountCard extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      visibility: false
+    };
+
+    this.updateState = this.updateState.bind(this)
+  }
+
+  updateState(){
+    this.setState({
+      visibility : !this.state.visibility
+    })
+  }
+
   render() {
     return (
       <Grid item xs="auto">
@@ -33,24 +49,34 @@ export default class AccountCard extends Component{
           <CardContent>
             <Divider/>
             <TextField
-              id="filled-read-only-input"
+              id="usernameField"
               size="small"
-              InputProps={{
-                readOnly: true,
-              }}
+              type="text"
+              value={this.props.username}
               variant="outlined"
+              aria-readonly={true}
             />
-            <TextField
-              id="filled-read-only-input"
+            <OutlinedInput
+              id="passwordField"
               size="small"
-              InputProps={{
-                readOnly: true,
-              }}
+              type={this.state.visibility ? "text" : "password"}
+              value={this.props.password}
               variant="outlined"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={this.updateState}
+                    edge="end"
+                  >
+                    {this.state.visibility ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
           </CardContent>
           <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites" title="copy">
+            <IconButton aria-label="copyAccount" title="copy">
               <ContentCopyIcon />
             </IconButton>
           </CardActions>

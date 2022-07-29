@@ -8,11 +8,11 @@ import FormAddCard from './components/FormAddCard';
 class Home extends Component {
     state = {
         cards:[
-            {id: 0, title: "Amazon", firstChar: "A"},
-            {id: 1, title: "Twitter", firstChar: "T"},
-            {id: 2, title: "Google", firstChar: "G"},
-            {id: 3, title: "Linkedn", firstChar: "L"},
-            {id: 4, title: "Twitch", firstChar: "T"}
+            {id: 0, title: "Amazon", username: "", password: ""},
+            {id: 1, title: "Twitter", username: "", password: ""},
+            {id: 2, title: "Google", username: "", password: ""},
+            {id: 3, title: "Linkedn", username: "", password: ""},
+            {id: 4, title: "Twitch", username: "", password: ""}
         ]}
     render() {
         return(
@@ -24,7 +24,10 @@ class Home extends Component {
                             <AccountCard
                             key={card.id}
                             title={card.title}
-                            firstchar={card.firstChar} />
+                            firstchar={(card.title)[0]}
+                            username={card.username}
+                            password={card.password}
+                            />
                         ))}
                     </Grid>    
                 </Container>
