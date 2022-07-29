@@ -50,7 +50,7 @@ export default class AccountCard extends Component{
             />
           </CardContent>
           <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
+            <IconButton aria-label="add to favorites" title="copy">
               <ContentCopyIcon />
             </IconButton>
           </CardActions>

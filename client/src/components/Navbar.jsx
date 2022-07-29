@@ -10,7 +10,7 @@ const StyledToolBar = styled(Toolbar)({
   justifyContent: "space-between",
 });
 
-const Navbar = () => {
+export default function Navbar() {
 
   const [open, setOpen] = React.useState(false);
 
@@ -23,33 +23,9 @@ const Navbar = () => {
         </Stack>
         <Stack direction="row" spacing={3} alignItems="center" sx={{ flexGrow: 0 }}>
             <SearchItem/>
-            <Tooltip title="Open settings">
-              <IconButton onClick={e=>setOpen(true)} sx={{ p: 0 }}>
-                  <Avatar sx={{ bgcolor: 'dark'}}> AO </Avatar>
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              open={open}
-              onClose={e=>setOpen(false)}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-            >
-              <MenuItem /*Onclick*/ > Profile </MenuItem>
-              <Divider variant="middle"/>
-              <MenuItem /*Onclick*/ > Logout </MenuItem>
-            </Menu>
+            <ProfileDialog/>
           </Stack>
       </StyledToolBar>
     </AppBar>
   );
 };
-export default Navbar;
