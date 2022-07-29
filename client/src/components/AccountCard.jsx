@@ -49,19 +49,24 @@ export default class AccountCard extends Component{
           <CardContent>
             <Divider/>
             <TextField
-              id="usernameField"
+              id={this.props.id}
               size="small"
               type="text"
               value={this.props.username}
               variant="outlined"
-              aria-readonly={true}
+              inputProps={{
+                readOnly: true,
+              }}
             />
             <OutlinedInput
-              id="passwordField"
+              id={this.props.id}
               size="small"
               type={this.state.visibility ? "text" : "password"}
               value={this.props.password}
               variant="outlined"
+              inputProps={{
+                readOnly: true,
+              }}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton

@@ -48,15 +48,10 @@ app.post("/addpassword", (req, res) => { //Richiesta POST, dovrò fare una richi
 
 });
 
-app.get(`/`, (req, res) => {
-  //const id = 1;
-  db.query(`SELECT * FROM Passwords`, (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(result)
-      console.log(result)
-    }
+app.get(`/search`, (req, res) => {
+  db.query(`SELECT * FROM Passwords`, (err, response) => {
+    if (err) console.log(err)
+    else res.send(response)
   })
 });
 
