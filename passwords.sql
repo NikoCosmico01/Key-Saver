@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Lug 29, 2022 alle 12:23
+-- Creato il: Lug 30, 2022 alle 12:32
 -- Versione del server: 10.4.24-MariaDB
 -- Versione PHP: 8.1.6
 
@@ -42,10 +42,10 @@ CREATE TABLE `passwords` (
 --
 
 INSERT INTO `passwords` (`ID`, `Name`, `Web`, `Mail`, `User`, `Password`, `IV`) VALUES
-(1, NULL, 'Suca', NULL, 'Scemo', 'c8e39b64dd3e7381ce2e', '?9Sx~??-&?\Z䗊h'),
-(2, NULL, 'www.google.com', NULL, 'login', '2fd9b54e23900056', 'S???Fߍ?q#??^??]'),
-(3, NULL, 'www.facebook.it', NULL, 'test', '93f0f21041', '?%6)???9i?%?z?'),
-(4, 'spotif', 'soppotif.it', 'ciao@spot.it', 'ciao', '635c7d94f8', '???d^~#???E]');
+(7, 'Facebook', 'www.Facebook.It', 'info@pollame.it', 'FacePoll', '3057d507acff31fbdce5b09cd0dd9f20', '9dc712992d10b6e1b36f4daa4f238e02'),
+(8, 'Spotify', 'www.spotify.it', 'lecosebelle@gmail.com', 'siamoBelli', '93c4c5a82c8f7d7f40b11a567cc784975aad0ed3f104d533', '2afe16fb7a62d4256111d59884f7eb40'),
+(9, 'Google', 'www.google.it', 'sucabliet@gmail.com', 'IBliettosi', '4521f7be5c3ccf3ee47d4f6471330dd6b0c49699', '72a393049ba7631808ced7fa90746aba'),
+(10, 'GitHub', 'www.github.com', 'lebellesanterelle@gmail.com', 'VaaDaViaelCiu', '1286892a83f83c58b4', 'f8a4c57f61e77e052ce8262746786caa');
 
 --
 -- Indici per le tabelle scaricate
@@ -65,7 +65,7 @@ ALTER TABLE `passwords`
 -- AUTO_INCREMENT per la tabella `passwords`
 --
 ALTER TABLE `passwords`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
