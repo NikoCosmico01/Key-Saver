@@ -49,6 +49,7 @@ export default class AccountCard extends Component{
           <CardContent>
             <Divider/>
             <TextField
+              id={this.props.id}
               size="small"
               type="text"
               value={this.props.username}
@@ -58,6 +59,7 @@ export default class AccountCard extends Component{
               }}
             />
             <OutlinedInput
+              id={this.props.id}
               size="small"
               type={this.state.visibility ? "text" : "password"}
               value={this.props.password}
