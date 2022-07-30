@@ -19,6 +19,9 @@ class Home extends Component {
 =======
 function Home(){
     const [accounts, setAccounts] = React.useState([]);
+<<<<<<< HEAD
+>>>>>>> parent of 8404700ba (ops)
+=======
 >>>>>>> parent of 8404700ba (ops)
 
     componentDidMount(){
@@ -37,6 +40,7 @@ function Home(){
     getAccountsList = () => {
         axios
             .get('http://localhost:5000/search')
+<<<<<<< HEAD
 <<<<<<< HEAD
             .then((response) => response.data)
             .then(response => this.setState({ accounts: response}))
@@ -66,6 +70,8 @@ function Home(){
         );
     }
 =======
+=======
+>>>>>>> parent of 8404700ba (ops)
             .then(response => {setAccounts(response.data)})
     });
 
