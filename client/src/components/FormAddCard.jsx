@@ -31,19 +31,34 @@ export default function FormAddCard() {
     editNameField: false
   });
 
+  const clearValues = () => {
+    console.log("ciao")
+    setValues({
+      web: "",
+      mail: "",
+      user: "",
+      password: "",
+      name: "Add New Account",
+      changedName: ""
+    })
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
+    clearValues()
     values.name = "Add New Account";
   };
 
   const handleClose = () => {
     setOpen(false);
+    clearValues()
   };
 
   const addPassword = () => {
     Axios.post('http://localhost:5000/addpassword', {name: values.name, web: values.web, mail:values.mail, user: values.user, password: values.password});
     setOpen(false);
     flags.editNameField = false;
+    clearValues()
   };
 
   const handleChange = (prop) => (event) => {
@@ -82,14 +97,12 @@ export default function FormAddCard() {
       editNameField: !flags.editNameField,
     });
   };
+  console.log(values)
 
   const handleSelect = () => {
-    let domain = (new URL(values.web)).hostname.replace('www.','');
-    domain = domain.split("").reverse().join("");
-    domain = domain.substring(domain.indexOf('.') + 1, domain.length)
-    domain = domain.split("").reverse().join("");
-    domain = domain.replace('.', ' ');
-    setValues({name: domain});
+    let domain = "";
+    domain = values.web.replace(/.+\/\/|www.|\..+/g, '')
+    setValues({...values, name: domain});
   }
 
   return (
@@ -145,6 +158,7 @@ export default function FormAddCard() {
               fullWidth
               variant="standard"
               onChange={handleChange('web')}
+              onBlur={handleSelect}
             />
           </Stack>
           <Container sx={{mt: 4}}>
@@ -157,7 +171,6 @@ export default function FormAddCard() {
               variant="standard"
               margin="dense"
               onChange={handleChange('mail')}
-              onSelect={handleSelect}
             />
             <TextField
               id="username"
