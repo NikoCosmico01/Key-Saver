@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { Avatar, Box, Card, Container, Grid, IconButton, Typography } from '@mui/material';
+import { Box, Container, Grid} from '@mui/material';
 import Navbar from './components/Navbar';
 import AccountCard from './components/AccountCard';
-import { Component } from 'react';
 import FormAddCard from './components/FormAddCard';
 import axios from 'axios';
-import { RestorePageRounded } from '@mui/icons-material';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 
@@ -16,12 +14,15 @@ function Home(){
     })
 
     useEffect(() => {
-        axios
+        const timer = setTimeout(() => {
+            axios
             .get('http://localhost:5000/search')
             .then(response => {setValues({accounts: response.data})})
-    }, []);
+        }, 2000);
+        return () => clearTimeout(timer);
+    });
 
-    const decryptPassword = async (encryption) => {
+    const decryptPassword = (encryption) => {
         axios.post('http://localhost:5000/decryptpassword', { 
             password: encryption.password,
             iv: encryption.iv 
@@ -45,7 +46,7 @@ function Home(){
                         title={account['Name']}
                         web={account['Web']}
                         username={account['User']}
-                        password={ await decryptPassword({password: account['Password'], iv: account['IV']}) }
+                        password={decryptPassword({password: account['Password'], iv: account['IV']}) }
                         />
                     ))}
                 </Grid>    

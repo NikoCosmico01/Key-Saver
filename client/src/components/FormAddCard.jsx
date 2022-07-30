@@ -83,6 +83,15 @@ export default function FormAddCard() {
     });
   };
 
+  const handleSelect = () => {
+    let domain = (new URL(values.web)).hostname.replace('www.','');
+    domain = domain.split("").reverse().join("");
+    domain = domain.substring(domain.indexOf('.') + 1, domain.length)
+    domain = domain.split("").reverse().join("");
+    domain = domain.replace('.', ' ');
+    setValues({name: domain});
+  }
+
   return (
     <>
       <SpeedDial
@@ -148,6 +157,7 @@ export default function FormAddCard() {
               variant="standard"
               margin="dense"
               onChange={handleChange('mail')}
+              onSelect={handleSelect}
             />
             <TextField
               id="username"
