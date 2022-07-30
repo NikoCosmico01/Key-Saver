@@ -18,7 +18,7 @@ function Home(){
         axios
             .get('http://localhost:5000/search')
             .then(response => {setValues({accounts: response.data})})
-    });
+    }, []);
 
     /*const pull_data = (data) => {
         console.log(data);
@@ -34,7 +34,7 @@ function Home(){
                         key={account['ID']}
                         title={account['Name']}
                         firstchar={account['Name'][0]}
-                        username={account['Name']}
+                        username={account['User']}
                         password={account['Password']}
                         />
                     ))}
