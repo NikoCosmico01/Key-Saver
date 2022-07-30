@@ -36,7 +36,7 @@ export default class AccountCard extends Component{
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                {this.props.firstchar}
+                <img height="16" width="16" src='http://www.google.com/s2/favicons?domain=www.edocuments.co.uk' />
               </Avatar>
             }
             action={
