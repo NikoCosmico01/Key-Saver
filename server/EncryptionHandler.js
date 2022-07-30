@@ -5,9 +5,12 @@ const encrypt = (password) => {
     const iv = Buffer.from(crypto.randomBytes(16)); //Ho un Buffer con 16 Byte Randomici
     const cipher = crypto.createCipheriv('aes-256-ctr', Buffer.from(secret), iv);
 
-    const encryptedPassword = Buffer.concat([cipher.update(password),cipher.final()]); //Ottengo la Password Criptata (ma ancora Bufferizzata)
+    const encryptedPassword = Buffer.concat([
+        cipher.update(password),
+        cipher.final(),
+    ]); //Ottengo la Password Criptata (ma ancora Bufferizzata)
 
-    return { iv: iv, password: encryptedPassword.toString("hex") }; //Passo l'Hash value e l'IV per il Decripting
+    return { iv: iv.toString("hex"), password: encryptedPassword.toString("hex") }; //Passo l'Hash value e l'IV per il Decripting
 };
 
 const decrypt = (encryption) => {
@@ -15,7 +18,7 @@ const decrypt = (encryption) => {
 
     const decryptedPassword = Buffer.concat([decipher.update(Buffer.from(encryption.password, "hex")),decipher.final()]); //Prendo la Password dall'Oggetto
 
-    return decryptedPassword.toString("hex");
+    return decryptedPassword.toString();
 }
 
 module.exports = {encrypt, decrypt};

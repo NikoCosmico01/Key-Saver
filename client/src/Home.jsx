@@ -7,6 +7,7 @@ import FormAddCard from './components/FormAddCard';
 import axios from 'axios';
 import { RestorePageRounded } from '@mui/icons-material';
 import { useEffect } from 'react';
+import { useCallback } from 'react';
 
 function Home(){
     const [values, setValues] = React.useState({
@@ -19,6 +20,15 @@ function Home(){
             .get('http://localhost:5000/search')
             .then(response => {setValues({accounts: response.data})})
     }, []);
+
+    const decryptPassword = async (encryption) => {
+        axios.post('http://localhost:5000/decryptpassword', { 
+            password: encryption.password,
+            iv: encryption.iv 
+        }).then((response) => {
+            return response.data
+        });
+    };
 
     /*const pull_data = (data) => {
         console.log(data);
@@ -35,7 +45,7 @@ function Home(){
                         title={account['Name']}
                         web={account['Web']}
                         username={account['User']}
-                        password={account['Password']}
+                        password={ await decryptPassword({password: account['Password'], iv: account['IV']}) }
                         />
                     ))}
                 </Grid>    

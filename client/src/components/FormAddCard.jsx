@@ -22,7 +22,7 @@ export default function FormAddCard() {
     mail: "",
     user: "",
     password: "",
-    name: "Add new Account",
+    name: "Add New Account",
     changedName: ""
   });
 
@@ -33,7 +33,7 @@ export default function FormAddCard() {
 
   const handleClickOpen = () => {
     setOpen(true);
-    values.name = "Add new Account";
+    values.name = "Add New Account";
   };
 
   const handleClose = () => {
