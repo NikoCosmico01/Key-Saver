@@ -9,27 +9,22 @@ import { RestorePageRounded } from '@mui/icons-material';
 import { useEffect } from 'react';
 
 function Home(){
-    const [values, setValues] = React.useState({
-        accounts: [],
-        searchText: "",
-    })
+    const [accounts, setAccounts] = React.useState([]);
 
     useEffect(() => {
         axios
             .get('http://localhost:5000/search')
-            .then(response => {setValues({accounts: response.data})})
+            .then(response => {setAccounts(response.data)})
     });
 
-    /*const pull_data = (data) => {
-        console.log(data);
-    } */ 
+    
     
     return(
         <Box>
-            <Navbar /*func={pull_data}*//>
+            <Navbar/>
             <Container sx={{mt: 4, mb: 4}}>
                 <Grid container justifyContent="center" alignItems="center" spacing={3}>
-                    {values.accounts.map(account => (
+                    {accounts.map(account => (
                         <AccountCard
                         key={account['ID']}
                         title={account['Name']}
@@ -41,7 +36,9 @@ function Home(){
                 </Grid>    
             </Container>
             <FormAddCard/> 
+            
         </Box>
     );
 }
+
 export default Home;
