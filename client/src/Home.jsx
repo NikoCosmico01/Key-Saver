@@ -33,7 +33,7 @@ function Home(){
                         <AccountCard
                         key={account['ID']}
                         title={account['Name']}
-                        firstchar={account['Name'][0]}
+                        web={account['Web']}
                         username={account['User']}
                         password={account['Password']}
                         />
