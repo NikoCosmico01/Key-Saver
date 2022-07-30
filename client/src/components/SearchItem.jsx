@@ -45,6 +45,9 @@ const Search = styled('div')(({ theme }) => ({
   }));
 
   export default function SearchItem(){
+    const [searchText, setSearchText] = React.useState("");
+
+
     return(
         <Search>
             <SearchIconWrapper>
@@ -53,6 +56,7 @@ const Search = styled('div')(({ theme }) => ({
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(e) => {setSearchText(e.target.value), console.log(searchText)}}
             />
           </Search>
     );
