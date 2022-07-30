@@ -21,7 +21,7 @@ function Home(){
             .then(response => {setValues({accounts: response.data})})
     }, []);
 
-    const decryptPassword = async (encryption) => {
+    const decryptPassword = (encryption) => {
         axios.post('http://localhost:5000/decryptpassword', { 
             password: encryption.password,
             iv: encryption.iv 
@@ -45,7 +45,7 @@ function Home(){
                         title={account['Name']}
                         web={account['Web']}
                         username={account['User']}
-                        password={ await decryptPassword({password: account['Password'], iv: account['IV']}) }
+                        password={ decryptPassword({password: account['Password'], iv: account['IV']}) }
                         />
                     ))}
                 </Grid>    
