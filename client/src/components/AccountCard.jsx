@@ -36,7 +36,7 @@ export default class AccountCard extends Component{
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                {this.props.firstchar}
+                <img height="16" width="16" src='http://www.google.com/s2/favicons?domain=www.edocuments.co.uk' />
               </Avatar>
             }
             action={
@@ -49,6 +49,7 @@ export default class AccountCard extends Component{
           <CardContent>
             <Divider/>
             <TextField
+              id={this.props.id}
               size="small"
               type="text"
               value={this.props.username}
@@ -58,6 +59,7 @@ export default class AccountCard extends Component{
               }}
             />
             <OutlinedInput
+              id={this.props.id}
               size="small"
               type={this.state.visibility ? "text" : "password"}
               value={this.props.password}
