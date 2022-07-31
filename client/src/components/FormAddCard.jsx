@@ -32,7 +32,6 @@ export default function FormAddCard() {
   });
 
   const clearValues = () => {
-    console.log("ciao")
     setValues({
       web: "",
       mail: "",
@@ -97,7 +96,6 @@ export default function FormAddCard() {
       editNameField: !flags.editNameField,
     });
   };
-  console.log(values)
 
   const handleSelect = () => {
     let domain = "";

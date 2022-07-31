@@ -43,6 +43,7 @@ export default class AccountCard extends Component{
               </IconButton>
             }
             title={this.props.title}
+            subheader={this.props.subheader}
           />
           <CardContent>
             <Divider/>

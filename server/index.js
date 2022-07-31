@@ -49,9 +49,20 @@ app.post("/addpassword", (req, res) => { //Richiesta POST, dovrò fare una richi
 });
 
 app.get(`/search`, (req, res) => {
+  var accounts = [];
+  var values = {password:"", iv:""};
   db.query(`SELECT * FROM Passwords`, (err, response) => {
     if (err) console.log(err)
-    else res.send(response)
+    else { 
+      Object.assign(accounts, response);
+      accounts.forEach(element => {
+        values.password = element['Password'];
+        values.iv = element['IV'];
+        element['Password'] = decrypt(values)
+      });
+      console.log(response)
+      res.send(response);
+    }
   })
 });
 
