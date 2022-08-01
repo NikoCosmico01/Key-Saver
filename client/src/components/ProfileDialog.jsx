@@ -22,19 +22,19 @@ export default function ProfileDialog() {
             </IconButton>
         </Tooltip>
         <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              open={open}
-              onClose={()=>setOpen(false)}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
+          sx={{ mt: '45px' }}
+          id="menu-appbar"
+          open={open}
+          onClose={()=>setOpen(false)}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
         >
             <MenuItem onClick={()=>setOpenDialog(true)}> Profile </MenuItem>
             <Divider variant="middle"/>
