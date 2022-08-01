@@ -3,6 +3,7 @@ import {Stack, AppBar, Toolbar, Typography, InputBase, IconButton, styled, alpha
 import { Key } from '@mui/icons-material';
 import ProfileDialog from './ProfileDialog';
 import SearchIcon from '@mui/icons-material/Search';
+import { useEffect } from 'react';
 
 const StyledToolBar = styled(Toolbar)({
   display: "flex",
@@ -52,7 +53,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 
-export default function Navbar() {
+export default function Navbar({pushData}) {
   return (
     <AppBar position="sticky">
       <StyledToolBar>
@@ -68,6 +69,7 @@ export default function Navbar() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={pushData}
             />
           </Search>
           <ProfileDialog/>

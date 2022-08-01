@@ -5,6 +5,12 @@ import { faFacebook } from '@fortawesome/fontawesome-free-brands'
 
 
 function Login() {
+    const [values, setValues] = React.useState({
+        user: "",
+        mail: "",
+        password: ""
+    })
+
     function clickSignUp() {
         const sign_in_btn = document.querySelector("#sign-in-btn");
         const sign_up_btn = document.querySelector("#sign-up-btn");
@@ -21,6 +27,11 @@ function Login() {
         container.classList.remove("sign-up-mode");
     }
 
+    const handleChange = (e) => {
+        setValues({...values, user: e.target.value});
+        console.log(values)
+    } 
+
     return (
         <div className='container'>
             <div className="forms-container">
@@ -31,7 +42,7 @@ function Login() {
                             <div className='icon-form'>
                                 <FontAwesomeIcon icon={solid('user')} />
                             </div>
-                            <input type="text" placeholder='Username'/>
+                            <input type="text" placeholder='Username' onChange={handleChange}/>
                         </div>
                             <div className="input-field">
                                 <div className="icon-form">

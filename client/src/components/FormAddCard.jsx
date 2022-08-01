@@ -14,7 +14,7 @@ import { Close, Done, Save, Visibility, VisibilityOff } from '@mui/icons-materia
 import Axios from "axios";
 import ModeIcon from '@mui/icons-material/Mode';
 
-export default function FormAddCard() {
+export default function FormAddCard(props) {
   const [open, setOpen] = React.useState(false);
 
   const [values, setValues] = React.useState({
@@ -58,6 +58,9 @@ export default function FormAddCard() {
     setOpen(false);
     flags.editNameField = false;
     clearValues()
+    setTimeout(() => {
+      handleAddCard()
+    }, 50);
   };
 
   const handleChange = (prop) => (event) => {
@@ -101,6 +104,10 @@ export default function FormAddCard() {
     let domain = "";
     domain = values.web.replace(/.+\/\/|www.|\..+/g, '')
     setValues({...values, name: domain});
+  }
+
+  const handleAddCard = () => {
+    props.handleClickSave();
   }
 
   return (

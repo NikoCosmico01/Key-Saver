@@ -9,15 +9,20 @@ import { red } from '@mui/material/colors';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Component } from 'react';
-import { Divider, Grid, InputAdornment, OutlinedInput } from '@mui/material';
+import { Divider, Grid, InputAdornment, OutlinedInput, Tooltip } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import { TramRounded, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Delete, TramRounded, Visibility, VisibilityOff } from '@mui/icons-material';
 
 export default class AccountCard extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      visibility: false
+      name: this.props.name,
+      website: this.props.website,
+      id: this.props.id,
+      username: this.props.username,
+      password: this.props.password,
+      visibility: false,
     };
 
     this.updateState = this.updateState.bind(this)
@@ -27,6 +32,10 @@ export default class AccountCard extends Component{
     this.setState({
       visibility : !this.state.visibility
     })
+  }
+
+  handleDeleteAccount = () => {
+    this.props.deleteAccount(this.state.id);
   }
 
   render() {
@@ -42,23 +51,23 @@ export default class AccountCard extends Component{
                 <MoreVertIcon />
               </IconButton>
             }
-            title={this.props.title}
-            subheader={this.props.subheader}
+            title={this.state.name}
+            subheader={this.state.website}
           />
           <CardContent>
             <Divider/>
             <TextField
-              id={this.props.id}
+              id={'username' + this.state.id.toString()}
               size="small"
               type="text"
-              value={this.props.username}
+              value={this.state.username}
               variant="outlined"
               inputProps={{
                 readOnly: true,
               }}
             />
             <OutlinedInput
-              id={this.props.id}
+              id={'password' + this.state.id.toString()}
               size="small"
               type={this.state.visibility ? "text" : "password"}
               value={this.props.password}
@@ -80,9 +89,16 @@ export default class AccountCard extends Component{
             />
           </CardContent>
           <CardActions disableSpacing>
-            <IconButton aria-label="copyAccount" title="copy">
-              <ContentCopyIcon />
-            </IconButton>
+            <Tooltip title="copy">
+              <IconButton aria-label="copyAccount">
+                <ContentCopyIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="delete">
+              <IconButton aria-label="deleteAccount" onClick={this.handleDeleteAccount}>
+                <Delete/>
+              </IconButton>
+            </Tooltip>
           </CardActions>
         </Card>
       </Grid>

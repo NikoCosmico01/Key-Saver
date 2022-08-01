@@ -29,12 +29,12 @@ db.connect(function(err) {
   console.log("Database Connected!");
 });
 
-app.get("/post", (req, res) => { //Test
+app.get('/post', (req, res) => { //Test
   console.log("Connesso a React");
   res.redirect("/");
 });
 
-app.post("/addpassword", (req, res) => { //Richiesta POST, dovrò fare una richiesta API
+app.post('/addpassword', (req, res) => { //Richiesta POST, dovrò fare una richiesta API
   const {name, web, mail, user, password} = req.body;
   const hashedPassword = encrypt(password);
 
@@ -48,7 +48,7 @@ app.post("/addpassword", (req, res) => { //Richiesta POST, dovrò fare una richi
 
 });
 
-app.get(`/search`, (req, res) => {
+app.get('/search', (req, res) => {
   var accounts = [];
   var values = {password:"", iv:""};
   db.query(`SELECT * FROM Passwords`, (err, response) => {
@@ -60,15 +60,23 @@ app.get(`/search`, (req, res) => {
         values.iv = element['IV'];
         element['Password'] = decrypt(values)
       });
-      console.log(response)
       res.send(response);
     }
   })
 });
 
-app.post('/decryptpassword', (req, res) => {
-  res.send(decrypt(req.body))
+app.get('/deleteAccount', (req, res) => {
+  const idCard = req.query.id;
+  var accounts = [];
+  var values = {password:"", iv:""};
+  db.query('DELETE FROM Passwords WHERE ID = ?', [idCard], (err, response) => {
+    if (err) console.log(err)
+    else { 
+      res.send("OK");
+    }
+  })
 });
+
 
 // Mostra il Messaggio che il Server è Attivo su una specifica Porta
 app.listen(PORT, () => console.log(`In ascolto sulla Porta ${PORT}`));

@@ -8,38 +8,74 @@ import { useEffect } from 'react';
 
 function Home(){
     const [values, setValues] = React.useState({
-        accounts: [],
+        allAccounts: [],
+        displayedAccounts: [],
         searchText: ""
     })
 
     useEffect(() => {
         axios
         .get('http://localhost:5000/search')
-        .then(response => {setValues({accounts: response.data})})
+        .then(response => {setValues({
+            ...values,
+            allAccounts: response.data, 
+            displayedAccounts: response.data})})
     }, []);
 
-    /*const pull_data = (data) => {
-        console.log(data);
-    } */ 
-    
+    const updateScreen = () => {
+        axios
+        .get('http://localhost:5000/search')
+        .then(response => {setValues({
+            ...values,
+            allAccounts: response.data,
+            displayedAccounts: response.data})})
+    }
+
+    const searchAccount = (e) => {
+        const search = e.target.value;
+        const searchAccount = [];
+        if(search != ""){
+            values.allAccounts.forEach(account => {
+                if(account['Name'].toLowerCase().startsWith(search.toLowerCase())) searchAccount.push(account)
+            })
+            setValues({...values, displayedAccounts: searchAccount});
+        }
+        else{
+            setValues({...values, displayedAccounts: values.allAccounts});
+        }
+    }
+
+    const handleDeleteAccount = (idCard) => {
+        axios
+        .get('http://localhost:5000/deleteAccount', {params: {id: idCard}})
+        .then(response => {
+            if(response.data == "OK"){
+                updateScreen();
+            }
+        }
+        )
+    }
+
     return(
         <Box>
-            <Navbar /*func={pull_data}*//>
+            <Navbar pushData={searchAccount}/>
             <Container sx={{mt: 4, mb: 4}}>
                 <Grid container justifyContent="center" alignItems="center" spacing={3}>
-                    {values.accounts.map(account => (
+                    {values.displayedAccounts.map(account => (
                         <AccountCard
                         key={account['ID']}
-                        title={account['Name']}
+                        id={account['ID']}
+                        name={account['Name']}
                         web={account['Web']}
                         username={account['User']}
                         password={account['Password']}
-                        subheader={account['Web']}
+                        website={account['Web']}
+                        deleteAccount={handleDeleteAccount}
                         />
                     ))}
                 </Grid>    
             </Container>
-            <FormAddCard/> 
+            <FormAddCard handleClickSave={updateScreen}/> 
         </Box>
     );
 }
