@@ -156,11 +156,12 @@ export default function FormAddCard(props) {
               Website address
             </Typography>
             <TextField
-              autoFocus
               id="website"
               placeholder="Ex: www.site.com"
               type="website"
               fullWidth
+              autoFocus
+              required
               variant="standard"
               onChange={handleChange('web')}
               onBlur={handleSelect}
@@ -170,6 +171,7 @@ export default function FormAddCard(props) {
             <Typography>Account</Typography>
             <TextField
               id="email"
+              required
               label="Email Address"
               type="email"
               fullWidth
@@ -182,6 +184,7 @@ export default function FormAddCard(props) {
               label="Username"
               type="username"
               fullWidth
+              required
               variant="standard"
               margin="dense"
               onChange={handleChange('user')}
@@ -192,6 +195,7 @@ export default function FormAddCard(props) {
                 id="password"
                 type={flags.showPassword ? 'text' : 'password'}
                 onChange={handleChange('password')}
+                required
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
