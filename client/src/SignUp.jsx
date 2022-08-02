@@ -60,7 +60,7 @@ export default function signUpForm() {
         }, 50);
     
   };
-
+  
   return (
     <Grid container component="main" sx={{ height: '100vh'}}>
         <Grid

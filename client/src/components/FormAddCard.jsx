@@ -29,12 +29,11 @@ export default function FormAddCard(props) {
   const [flags, setFlags] = React.useState({
     showPassword: false,
     editNameField: false,
-    webEmpty: false,
-    emailEmpty: false,
-    emailValid: true,
-    usernameEmpty: false,
-    passwordEmpty: false,
-    accountValid: true,
+    isValid: true,
+    isEmptyMail: false,
+    isEmptyUsername: false,
+    isEmptyPassword: false,
+    isEmptyWeb: false,
   });
 
   const clearValues = () => {
@@ -57,23 +56,44 @@ export default function FormAddCard(props) {
   const handleClose = () => {
     setOpen(false);
     clearValues()
+    setFlags({...flags, isValid: true})
   };
 
   const CheckAccount = () => {
-    if(values.mail.length === 0 && typeof values.mail === 'string'){
-      setFlags({...flags, emailEmpty: true, accountValid: false})
-    }else if(values.web.length === 0 && typeof values.web === 'string'){
-      setFlags({...flags, webEmpty: true, accountValid: false})
-    }else if(values.user.length === 0 && typeof values.user === 'string'){
-      setFlags({...flags, usernameEmpty: true, accountValid: false})
-    }else if(values.password.length === 0 && typeof values.password === 'string'){
-      setFlags({...flags, passwordEmpty: true, accountValid: false})
+    var isValid = true;
+    var isEmptyMail = false;
+    var isEmptyWeb = false;
+    var isEmptyUsername = false;
+    var isEmptyPassword = false;
+    if(values.mail.length === 0){
+      isValid = false;
+      isEmptyMail = true;
+    };
+    if(values.web.length === 0){
+      isValid = false;
+      isEmptyWeb = true;
+    };
+    if(values.user.length === 0){
+      isValid = false;
+      isEmptyUsername = true
+    };
+    if(values.password.length === 0){
+      isValid = false;
+      isEmptyPassword = true
     }
+    setFlags({
+      ...flags,
+      isValid: isValid,
+      isEmptyWeb: isEmptyWeb,
+      isEmptyMail: isEmptyMail,
+      isEmptyPassword: isEmptyPassword,
+      isEmptyUsername: isEmptyUsername})
+    return isValid
   }
 
   const addPassword = () => {
-    CheckAccount()
-    if(flags.accountValid){
+    const isValid = CheckAccount();
+    if(isValid){
       Axios.post('http://localhost:5000/addpassword', {name: values.name, web: values.web, mail:values.mail, user: values.user, password: values.password});
     setOpen(false);
     flags.editNameField = false;
@@ -84,8 +104,28 @@ export default function FormAddCard(props) {
     }
   };
 
+  const resetMailField = () => {
+    setFlags({...flags, isEmptyMail: false});
+  };
+
+  const resetUsernameField = () => {
+    setFlags({...flags, isEmptyUsername: false});
+  };
+
+  const resetPasswordField = () => {
+    setFlags({...flags, isEmptyPassword: false});
+  };
+
+  const resetWebField = () => {
+    setFlags({...flags, isEmptyWeb: false});
+  };
+
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleChangeMail = (event) => {
+    setValues({ ...values, mail: event.target.value, user: event.target.value});
   };
 
   const handleClickShowPassword = () => {
@@ -123,7 +163,7 @@ export default function FormAddCard(props) {
 
   const handleSelect = () => {
     let domain = "";
-    domain = values.web.replace(/.+\/\/|www.|\..+/g, '')
+    domain = values.web.replace(/.+\/\/|www.|\..+/g, '');
     setValues({...values, name: domain});
   }
 
@@ -179,44 +219,47 @@ export default function FormAddCard(props) {
             <TextField
               id="website"
               placeholder="Ex: www.site.com"
-              type="website"
+              type="url"
               fullWidth
               autoFocus
-              required
+              error = {flags.isEmptyWeb}
               variant="standard"
               onChange={handleChange('web')}
               onBlur={handleSelect}
+              onFocus={resetWebField}
             />
           </Stack>
           <Container sx={{mt: 4}}>
             <Typography>Account</Typography>
             <TextField
               id="email"
-              required
               label="Email Address"
               type="email"
               fullWidth
+              error = {flags.isEmptyMail}
               variant="standard"
               margin="dense"
-              onChange={handleChange('mail')}
+              onChange={handleChangeMail}
+              onFocus={resetMailField}
             />
             <TextField
               id="username"
               label="Username"
-              type="username"
+              type="text"
+              value={values.user}
               fullWidth
-              required
+              error = {flags.isEmptyUsername}
               variant="standard"
               margin="dense"
               onChange={handleChange('user')}
+              onFocus={resetUsernameField}
             />
-            <FormControl variant="standard" fullWidth margin="dense">
+            <FormControl variant="standard" fullWidth margin="dense" onFocus={resetPasswordField} error = {flags.isEmptyPassword}>
               <InputLabel htmlFor="password">Password</InputLabel>
               <Input
                 id="password"
                 type={flags.showPassword ? 'text' : 'password'}
                 onChange={handleChange('password')}
-                required
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton

@@ -6,6 +6,7 @@ import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import copy from "copy-to-clipboard";
 import { Component } from 'react';
 import { Divider, Grid, InputAdornment, OutlinedInput, Tooltip, Menu, MenuItem} from '@mui/material';
 import TextField from '@mui/material/TextField';
@@ -21,12 +22,21 @@ export default class AccountCard extends Component{
       username: this.props.username,
       password: this.props.password,
       visibility: false,
-      openMenu: false,
+      anchorEl: null,
+      open: Boolean(this.anchorEl),
+      copyText: this.props.username + "\n" + this.props.password,
     };
 
     this.updateState = this.updateState.bind(this)
-    this.handleMenu = this.handleMenu.bind(this)
   }
+
+  handleClick = (event) => {
+    this.setState({...this, anchorEl: event.currentTarget, open: Boolean(event.currentTarget)});
+  };
+
+  handleClose = () => {
+    this.setState({...this, anchorEl: null, open: Boolean(null)});
+  };
 
   updateState(){
     this.setState({
@@ -35,16 +45,13 @@ export default class AccountCard extends Component{
     })
   }
 
-  handleMenu(){
-    this.setState({
-      ...this,
-      openMenu: !this.state.openMenu
-    })
-  }
-
   handleDeleteAccount = () => {
     this.props.deleteAccount(this.state.id);
   }
+
+  copyToClipboard = () => {
+    copy(this.state.copyText);
+ }
 
   render() {
     return (
@@ -56,13 +63,18 @@ export default class AccountCard extends Component{
             }
             action={
               <>
-                <IconButton aria-label="settings" onClick={this.handleMenu}>
+                <IconButton aria-label="settings" onClick={this.handleClick}>
                   <MoreVertIcon id="menuCard"/>
                 </IconButton>
                 <Menu
-                  open={this.state.openMenu}
-                  onClose={this.handleMenu}
+                  open={this.state.open}
+                  onClose={this.handleClose}
                   keepMounted
+                  anchorEl={this.state.anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
                   transformOrigin={{
                     vertical: 'top',
                     horizontal: 'right',
@@ -110,7 +122,7 @@ export default class AccountCard extends Component{
           </CardContent>
           <CardActions disableSpacing>
             <Tooltip title="copy">
-              <IconButton aria-label="copyAccount">
+              <IconButton aria-label="copyAccount" onClick={this.copyToClipboard}>
                 <ContentCopyIcon />
               </IconButton>
             </Tooltip>

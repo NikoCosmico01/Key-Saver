@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, AppBar, Toolbar, Typography, InputBase, IconButton, styled, alpha} from '@mui/material';
+import {Stack, AppBar, Toolbar, Typography, InputBase, IconButton, styled, alpha, Tooltip, Avatar, Menu, MenuItem} from '@mui/material';
 import { Key } from '@mui/icons-material';
 import ProfileDialog from './ProfileDialog';
 import SearchIcon from '@mui/icons-material/Search';
@@ -54,6 +54,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 export default function Navbar({pushData}) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <AppBar position="sticky">
       <StyledToolBar>
@@ -72,7 +83,29 @@ export default function Navbar({pushData}) {
               onChange={pushData}
             />
           </Search>
-          <ProfileDialog/>
+          <Tooltip title="Open settings">
+            <IconButton onClick={handleClick} sx={{ p: 0 }}>
+                <Avatar sx={{ bgcolor: 'dark'}}> AO </Avatar>
+            </IconButton>
+        </Tooltip>
+        <Menu
+          sx={{ mt: '45px' }}
+          id="menu-appbar"
+          open={open}
+          onClose={handleClose}
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+        >
+            <MenuItem /*Onclick*/ > Logout </MenuItem>
+        </Menu>
         </Stack>
       </StyledToolBar>
     </AppBar>
