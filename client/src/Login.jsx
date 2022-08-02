@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+ import { Route } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -29,6 +30,13 @@ function Copyright(props) {
 
 const theme = createTheme();
 
+function loggedIn(ID) {
+
+  return (
+    <Route path="/:id" component={ID}/>
+  );
+}
+
 export default function signInForm() {
 
   const resetError = () => {
@@ -48,6 +56,7 @@ export default function signInForm() {
       setFlags({error: true})
     } else {
       console.log(response.data) //Login Avvenuto - Viene passato l'ID
+      loggedIn(response.data)
     }
   })
   };
@@ -57,6 +66,7 @@ export default function signInForm() {
       <Grid container component="main" sx={{ height: '100vh'}}>
         <Grid
           item
+          
           xs={false}
           sm={4}
           md={7}
