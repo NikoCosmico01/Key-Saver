@@ -65,12 +65,18 @@ app.get(`/checklogin`, (req, res) => {
   db.query("SELECT * FROM Login WHERE EMail = (?)", [email], (err, response) => {
     if (err) console.log(err)
     else { 
+      if (response.length > 0 && response[0]['EMail'] === email) {
       values.password = response[0]['Password'];
       values.iv = response[0]['IV'];
-      if (password === decrypt(values)){
-        res.send("sei loggato")
+      if (password === decrypt(values)) {
+        res.send(response[0]['ID'].toString()) //Login Effettuato, Invio ID
+      } else {
+        res.send("Error")
       }
+    } else {
+      res.send("Error")
     }
+  }
   })
 });
 

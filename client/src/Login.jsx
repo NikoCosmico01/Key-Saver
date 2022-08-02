@@ -31,16 +31,24 @@ const theme = createTheme();
 
 export default function signInForm() {
 
+  const resetError = () => {
+    setFlags({error: false})
+  }
+
+  const [flags, setFlags] = React.useState({
+    error: false
+  });
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
   Axios.get('http://localhost:5000/checklogin', { params: { email: data.get('email'), password: data.get('password') }} )
   .then(response => {
-    console.log(response)
+    if (response.data === "Error") {
+      setFlags({error: true})
+    } else {
+      console.log(response.data) //Login Avvenuto - Viene passato l'ID
+    }
   })
   };
 
@@ -87,6 +95,8 @@ export default function signInForm() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                error = {flags.error}
+                onFocus= {resetError}
                 autoFocus
                 size='small'
               />
@@ -96,6 +106,8 @@ export default function signInForm() {
                 fullWidth
                 name="password"
                 label="Password"
+                error = {flags.error}
+                onFocus= {resetError}
                 type="password"
                 id="password"
                 autoComplete="current-password"
