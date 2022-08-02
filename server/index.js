@@ -58,13 +58,18 @@ app.get(`/checksignup`, (req, res) => {
   })
 });
 
-app.get(`/executelogin`, (req, res) => {
+app.get(`/checklogin`, (req, res) => {
   const email = req.query.email
   const password = req.query.password
+  var values = {password:"", iv:""};
   db.query("SELECT * FROM Login WHERE EMail = (?)", [email], (err, response) => {
     if (err) console.log(err)
     else { 
-      res.send(response);
+      values.password = response[0]['Password'];
+      values.iv = response[0]['IV'];
+      if (password === decrypt(values)){
+        res.send("sei loggato")
+      }
     }
   })
 });
