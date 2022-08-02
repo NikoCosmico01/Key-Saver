@@ -23,12 +23,18 @@ export default function FormAddCard(props) {
     user: "",
     password: "",
     name: "Add New Account",
-    changedName: ""
+    changedName: "",
   });
 
   const [flags, setFlags] = React.useState({
     showPassword: false,
-    editNameField: false
+    editNameField: false,
+    webEmpty: false,
+    emailEmpty: false,
+    emailValid: true,
+    usernameEmpty: false,
+    passwordEmpty: false,
+    accountValid: true,
   });
 
   const clearValues = () => {
@@ -53,14 +59,29 @@ export default function FormAddCard(props) {
     clearValues()
   };
 
+  const CheckAccount = () => {
+    if(values.mail.length === 0 && typeof values.mail === 'string'){
+      setFlags({...flags, emailEmpty: true, accountValid: false})
+    }else if(values.web.length === 0 && typeof values.web === 'string'){
+      setFlags({...flags, webEmpty: true, accountValid: false})
+    }else if(values.user.length === 0 && typeof values.user === 'string'){
+      setFlags({...flags, usernameEmpty: true, accountValid: false})
+    }else if(values.password.length === 0 && typeof values.password === 'string'){
+      setFlags({...flags, passwordEmpty: true, accountValid: false})
+    }
+  }
+
   const addPassword = () => {
-    Axios.post('http://localhost:5000/addpassword', {name: values.name, web: values.web, mail:values.mail, user: values.user, password: values.password});
+    CheckAccount()
+    if(flags.accountValid){
+      Axios.post('http://localhost:5000/addpassword', {name: values.name, web: values.web, mail:values.mail, user: values.user, password: values.password});
     setOpen(false);
     flags.editNameField = false;
     clearValues()
     setTimeout(() => {
       handleAddCard()
-    }, 50);
+    }, 10);
+    }
   };
 
   const handleChange = (prop) => (event) => {
