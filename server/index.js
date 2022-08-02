@@ -83,6 +83,7 @@ app.post("/signup", (req, res) => { //Richiesta POST, dovrò fare una richiesta 
 
 });
 
+
 app.get('/search', (req, res) => {
   var accounts = [];
   var values = {password:"", iv:""};
