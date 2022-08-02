@@ -48,6 +48,41 @@ app.post('/addpassword', (req, res) => { //Richiesta POST, dovrò fare una richi
 
 });
 
+app.get(`/checksignup`, (req, res) => {
+  const email = req.query.email
+  db.query("SELECT * FROM Login WHERE EMail = (?)", [email], (err, response) => {
+    if (err) console.log(err)
+    else { 
+      res.send(response);
+    }
+  })
+});
+
+app.get(`/executelogin`, (req, res) => {
+  const email = req.query.email
+  const password = req.query.password
+  db.query("SELECT * FROM Login WHERE EMail = (?)", [email], (err, response) => {
+    if (err) console.log(err)
+    else { 
+      res.send(response);
+    }
+  })
+});
+
+app.post("/signup", (req, res) => { //Richiesta POST, dovrò fare una richiesta API
+  const {email, password, name, surname} = req.body;
+  const hashedPassword = encrypt(password);
+
+  db.query("INSERT INTO Login (EMail, Password, IV, Name, Surname) VALUES (?, ?, ?, ?, ?)", [email, hashedPassword.password, hashedPassword.iv, name, surname], (err, result) => { //Faccio la Insert e mi salvo eventuali errori in "err"
+    if (err) {
+      console.log(err) //Se ci sono errori li mostro in console
+    } else {
+      res.send("Registrato Successo") //Se NON ci sono errori mando una stringa di Success
+    }
+  })
+
+});
+
 app.get('/search', (req, res) => {
   var accounts = [];
   var values = {password:"", iv:""};

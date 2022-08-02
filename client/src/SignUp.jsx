@@ -9,6 +9,7 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Axios from "axios";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -29,15 +30,43 @@ function Copyright(props) {
 
 export default function signUpForm() {
 
+  const resetMail = () => {
+    setFlags({...flags, mailExist: false})
+  }
+
+  const resetPW = () => {
+    setFlags({...flags, wrongPassword: false})
+  }
+
+  const [flags, setFlags] = React.useState({
+    mailExist: false,
+    wrongPassword: false
+  });
+
+  let finalResult = 0
+  let responseLength = ""
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-        email: data.get('email'),
-        password: data.get('password'),
-        name: data.get('name'),
-        surname: data.get('surname'),
-    });
+    Axios.get('http://localhost:5000/checksignup', { params: {email: data.get('email')}} )
+    .then(response => {
+            responseLength = response.data.length
+            console.log(responseLength)
+        })
+    setTimeout(() => {
+        if (responseLength > 0) {
+            setFlags({...flags, mailExist: true})
+            finalResult = 1
+        }
+        if (data.get('password') != data.get('repeatPassword')){
+            setFlags({...flags, wrongPassword: true})
+            finalResult = 1
+        } 
+        if (finalResult === 0) {
+            Axios.post('http://localhost:5000/signup', {email:data.get('email'), password: data.get('password'), name: data.get('name'), surname: data.get('surname')});
+        }
+        }, 50);
+    
   };
 
   return (
@@ -71,12 +100,15 @@ export default function signUpForm() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5"> Sign up </Typography>
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1, width: '60%'}}>
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: '60%'}}>
                     <TextField
                         margin="normal"
                         required
                         fullWidth
                         id="email"
+                        name="email"
+                        error = {flags.mailExist}
+                        onFocus= {resetMail}
                         label="Email Address"
                         autoFocus
                         size='small'
@@ -87,7 +119,10 @@ export default function signUpForm() {
                         fullWidth
                         label="Password"
                         type="password"
+                        error = {flags.wrongPassword}
+                        onFocus= {resetPW}
                         id="password"
+                        name="password"
                         size='small'
                     />
                     <TextField
@@ -96,7 +131,10 @@ export default function signUpForm() {
                         fullWidth
                         label="Repeat Password"
                         type="password"
+                        error = {flags.wrongPassword}
+                        onFocus= {resetPW}
                         id="repeatPassword"
+                        name="repeatPassword"
                         size='small'
                     />
                     <FormControlLabel
@@ -110,6 +148,7 @@ export default function signUpForm() {
                             label="Name"
                             type="text"
                             id="name"
+                            name="name"
                             size='small'
                             variant='standard'
                             sx={{width: "47%"}}
@@ -120,6 +159,7 @@ export default function signUpForm() {
                             label="Surname"
                             type="text"
                             id="surname"
+                            name="surname"
                             size='small'
                             variant='standard'
                             sx={{width: "47%"}}
@@ -135,8 +175,8 @@ export default function signUpForm() {
                     </Button>
                     <Grid container>
                         <Grid item>
-                        <Link href="/registration" variant="body2">
-                            {"Are you already registered? Sign In"}
+                        <Link href="/login" variant="body2">
+                            {"Already registered? Sign In"}
                         </Link>
                         </Grid>
                     </Grid>
