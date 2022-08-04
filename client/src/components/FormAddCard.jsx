@@ -38,6 +38,7 @@ export default function FormAddCard(props) {
 
   const clearValues = () => {
     setValues({
+      id: "",
       web: "",
       mail: "",
       user: "",
@@ -65,6 +66,7 @@ export default function FormAddCard(props) {
     var isEmptyWeb = false;
     var isEmptyUsername = false;
     var isEmptyPassword = false;
+    const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if(values.mail.length === 0){
       isValid = false;
       isEmptyMail = true;
@@ -81,6 +83,10 @@ export default function FormAddCard(props) {
       isValid = false;
       isEmptyPassword = true
     }
+    if(!values.mail.match(regex)){
+      isValid = false;
+      isEmptyMail = true;
+    }
     setFlags({
       ...flags,
       isValid: isValid,
@@ -94,7 +100,7 @@ export default function FormAddCard(props) {
   const addPassword = () => {
     const isValid = CheckAccount();
     if(isValid){
-      Axios.post('http://localhost:5000/addpassword', {name: values.name, web: values.web, mail:values.mail, user: values.user, password: values.password});
+      Axios.post('http://localhost:5000/addpassword', {name: values.name, web: values.web, mail:values.mail, user: values.user, password: values.password, id: props.user});
     setOpen(false);
     flags.editNameField = false;
     clearValues()

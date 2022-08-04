@@ -5,17 +5,32 @@ import AccountCard from './components/AccountCard';
 import FormAddCard from './components/FormAddCard';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { useAuth } from './utils/auth';
 
 function Home(){
+    const auth = useAuth();
     const [values, setValues] = React.useState({
         allAccounts: [],
         displayedAccounts: [],
         searchText: ""
     })
+    const [user, setUser] = React.useState({
+        name: "",
+        surname: ""
+    })
 
     useEffect(() => {
         axios
-        .get('http://localhost:5000/search')
+        .get('http://localhost:5000/user', {params: {user: auth.user}})
+        .then(response => {
+            setUser({
+                name: response.data['Name'],
+                surname: response.data['Surname']
+            })
+        })
+
+        axios
+        .get('http://localhost:5000/search', {params: {user: auth.user}})
         .then(response => {setValues({
             ...values,
             allAccounts: response.data, 
@@ -24,7 +39,7 @@ function Home(){
 
     const updateScreen = () => {
         axios
-        .get('http://localhost:5000/search')
+        .get('http://localhost:5000/search', {params: {user: auth.user}})
         .then(response => {setValues({
             ...values,
             allAccounts: response.data,
@@ -58,7 +73,7 @@ function Home(){
 
     return(
         <Box>
-            <Navbar pushData={searchAccount}/>
+            <Navbar pushData={searchAccount} name={user.name} surname={user.surname}/>
             <Container sx={{mt: 4, mb: 4}}>
                 <Grid container justifyContent="center" alignItems="center" spacing={3}>
                     {values.displayedAccounts.map(account => (
@@ -71,11 +86,12 @@ function Home(){
                         password={account['Password']}
                         website={account['Web']}
                         deleteAccount={handleDeleteAccount}
+                        email={account['Mail']}
                         />
                     ))}
                 </Grid>    
             </Container>
-            <FormAddCard handleClickSave={updateScreen}/> 
+            <FormAddCard handleClickSave={updateScreen} user={auth.user}/> 
         </Box>
     );
 }

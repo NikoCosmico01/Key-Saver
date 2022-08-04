@@ -35,10 +35,10 @@ app.get('/post', (req, res) => { //Test
 });
 
 app.post('/addpassword', (req, res) => { //Richiesta POST, dovrò fare una richiesta API
-  const {name, web, mail, user, password} = req.body;
+  const {name, web, mail, user, password, id} = req.body;
   const hashedPassword = encrypt(password);
 
-  db.query("INSERT INTO Passwords (Name, Web, Mail, User, Password, IV) VALUES (?, ?, ?, ?, ?, ?)", [name, web, mail, user, hashedPassword.password, hashedPassword.iv], (err, result) => { //Faccio la Insert e mi salvo eventuali errori in "err"
+  db.query("INSERT INTO Passwords (Name, Web, Mail, User, Password, IV, UniqueID) VALUES (?, ?, ?, ?, ?, ?, ?)", [name, web, mail, user, hashedPassword.password, hashedPassword.iv, id], (err, result) => { //Faccio la Insert e mi salvo eventuali errori in "err"
     if (err) {
       console.log(err) //Se ci sono errori li mostro in console
     } else {
@@ -88,7 +88,7 @@ app.post("/signup", (req, res) => { //Richiesta POST, dovrò fare una richiesta 
     if (err) {
       console.log(err) //Se ci sono errori li mostro in console
     } else {
-      res.send("Registrato Successo") //Se NON ci sono errori mando una stringa di Success
+      res.send("OK") //Se NON ci sono errori mando una stringa di Success
     }
   })
 
@@ -96,9 +96,10 @@ app.post("/signup", (req, res) => { //Richiesta POST, dovrò fare una richiesta 
 
 
 app.get('/search', (req, res) => {
+  const idUser = req.query.user;
   var accounts = [];
   var values = {password:"", iv:""};
-  db.query(`SELECT * FROM Passwords`, (err, response) => {
+  db.query(`SELECT * FROM Passwords WHERE UniqueID = ?`, [idUser], (err, response) => {
     if (err) console.log(err)
     else { 
       Object.assign(accounts, response);
@@ -108,6 +109,16 @@ app.get('/search', (req, res) => {
         element['Password'] = decrypt(values)
       });
       res.send(response);
+    }
+  })
+});
+
+app.get('/user', (req, res) => {
+  const idUser = req.query.user;
+  db.query(`SELECT Name, Surname FROM login WHERE ID = ?`, [idUser], (err, response) => {
+    if (err) console.log(err)
+    else {
+      res.send(response[0]);
     }
   })
 });

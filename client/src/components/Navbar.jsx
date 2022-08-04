@@ -1,9 +1,11 @@
 import * as React from 'react';
 import {Stack, AppBar, Toolbar, Typography, InputBase, IconButton, styled, alpha, Tooltip, Avatar, Menu, MenuItem} from '@mui/material';
-import { Key } from '@mui/icons-material';
+import { Key, PropaneSharp } from '@mui/icons-material';
 import ProfileDialog from './ProfileDialog';
 import SearchIcon from '@mui/icons-material/Search';
 import { useEffect } from 'react';
+import { useAuth } from '../utils/auth';
+import { useNavigate } from 'react-router-dom';
 
 const StyledToolBar = styled(Toolbar)({
   display: "flex",
@@ -53,7 +55,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 
-export default function Navbar({pushData}) {
+export default function Navbar({pushData, name, surname}) {
+  const auth = useAuth();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -64,6 +68,11 @@ export default function Navbar({pushData}) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+    auth.logout()
+    navigate('/login')
+  }
 
   return (
     <AppBar position="sticky">
@@ -85,7 +94,7 @@ export default function Navbar({pushData}) {
           </Search>
           <Tooltip title="Open settings">
             <IconButton onClick={handleClick} sx={{ p: 0 }}>
-                <Avatar sx={{ bgcolor: 'dark'}}> AO </Avatar>
+                <Avatar sx={{ bgcolor: 'dark'}}> {name[0] + "" + surname[0]} </Avatar>
             </IconButton>
         </Tooltip>
         <Menu
@@ -104,7 +113,7 @@ export default function Navbar({pushData}) {
             horizontal: 'right',
           }}
         >
-            <MenuItem /*Onclick*/ > Logout </MenuItem>
+            <MenuItem onClick={handleLogout} > Logout </MenuItem>
         </Menu>
         </Stack>
       </StyledToolBar>

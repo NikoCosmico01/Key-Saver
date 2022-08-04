@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
- import { Route } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -14,13 +13,19 @@ import Axios from "axios";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useAuth } from './utils/auth';
+import {useNavigate} from 'react-router-dom';
+import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import Cookies from 'js-cookie';
 
 function Copyright(props) {
+  const navigate = useNavigate()
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="">
-        Your Website
+      <Link color="inherit" component="button" onClick={() => {navigate('/login')}}>
+        Key Saver
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -28,41 +33,55 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
-
-function loggedIn(ID) {
-
-  return (
-    <Route path="/:id" component={ID}/>
-  );
-}
-
 export default function signInForm() {
+  const auth = useAuth()
+  const navigate = useNavigate()
+  const [flags, setFlags] = React.useState({
+    error: false,
+    showPassword: false
+  });
+
+  const [checked, setChecked] = React.useState(true);
 
   const resetError = () => {
     setFlags({error: false})
   }
 
-  const [flags, setFlags] = React.useState({
-    error: false
-  });
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-  Axios.get('http://localhost:5000/checklogin', { params: { email: data.get('email'), password: data.get('password') }} )
-  .then(response => {
-    if (response.data === "Error") {
-      setFlags({error: true})
-    } else {
-      console.log(response.data) //Login Avvenuto - Viene passato l'ID
-      loggedIn(response.data)
-    }
+    const email = data.get('email');
+    const password = data.get('password');
+    Axios.get('http://localhost:5000/checklogin', { params: { email: email, password: password }} )
+    .then(response => {
+      if (response.data === "Error") {
+        setFlags({error: true})
+      } else {
+        console.log(auth)
+        auth.login(response.data)
+        if(checked) Cookies.set('KeySaver', response.data, {expires: 7})
+        navigate('/', {replace: true})
+      }
   })
   };
 
+  const handleClickShowPassword = () => {
+    setFlags({
+      ...flags,
+      showPassword: !flags.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
+
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Grid container component="main" sx={{ height: '100vh'}}>
         <Grid
           item
@@ -104,27 +123,36 @@ export default function signInForm() {
                 id="email"
                 label="Email Address"
                 name="email"
-                autoComplete="email"
                 error = {flags.error}
                 onFocus= {resetError}
                 autoFocus
                 size='small'
               />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                error = {flags.error}
-                onFocus= {resetError}
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                size='small'
-              />
+              <FormControl required onFocus={resetError} error={flags.error} margin="normal" variant="outlined">
+                <InputLabel size="small" htmlFor="password"> Password </InputLabel>
+                <OutlinedInput
+                  id="password"
+                  name="password"
+                  size='small'
+                  fullWidth
+                  label="Password"
+                  type={flags.showPassword ? 'text' : 'password'}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {flags.showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={<Checkbox checked={checked} onChange={handleChange} color="primary" />}
                 label="Remember me"
               />
               <Button
@@ -137,7 +165,7 @@ export default function signInForm() {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href="/registration" variant="body2">
+                  <Link onClick={() => {navigate('/registration')}} component="button" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
@@ -147,6 +175,6 @@ export default function signInForm() {
           </Box>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    </>
   );
 }
