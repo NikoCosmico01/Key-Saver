@@ -57,8 +57,8 @@ export default function signInForm() {
       if (response.data === "Error") {
         setFlags({error: true})
       } else {
-        console.log(auth)
-        auth.login(response.data)
+        const user = response.data
+        auth.login(user)
         if(checked) Cookies.set('KeySaver', response.data, {expires: 7})
         navigate('/', {replace: true})
       }

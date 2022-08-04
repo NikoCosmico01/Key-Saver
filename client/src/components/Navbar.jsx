@@ -6,6 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useEffect } from 'react';
 import { useAuth } from '../utils/auth';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const StyledToolBar = styled(Toolbar)({
   display: "flex",
@@ -71,6 +72,7 @@ export default function Navbar({pushData, name, surname}) {
 
   const handleLogout = () => {
     auth.logout()
+    Cookies.remove("KeySaver")
     navigate('/login')
   }
 

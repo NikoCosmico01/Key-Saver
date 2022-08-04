@@ -7,6 +7,7 @@ import SignUp from './SignUp';
 import { AuthProvider, useAuth } from './utils/auth';
 import Cookies from 'js-cookie';
 import { RequireLogin } from './components/RequireLogin';
+import { BrowserRouter } from 'react-router-dom';
 
 
 function App() {
@@ -14,16 +15,16 @@ function App() {
 
   React.useEffect(() => {
     const user = Cookies.get("KeySaver");
-    console.log(auth)
+    if(user) auth.login(user)
   })
     return (
-      <AuthProvider>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<RequireAuth> <Home /> </RequireAuth>} />
           <Route path="/login" element={<RequireLogin> <Login /> </RequireLogin>} />
           <Route path="/registration" element={<SignUp />} />
         </Routes>
-      </AuthProvider>
+      </BrowserRouter>
     );
 }
 
