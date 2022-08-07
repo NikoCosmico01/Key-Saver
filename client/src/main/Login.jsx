@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -12,8 +11,7 @@ import Grid from '@mui/material/Grid';
 import Axios from "axios";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useAuth } from './utils/auth';
+import { useAuth } from '../utils/auth';
 import {useNavigate} from 'react-router-dom';
 import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -24,7 +22,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" component="button" onClick={() => {navigate('/login')}}>
+      <Link color="inherit" component="button" onClick={() => {navigate('/')}}>
         Key Saver
       </Link>{' '}
       {new Date().getFullYear()}
@@ -60,7 +58,7 @@ export default function signInForm() {
         const user = response.data
         auth.login(user)
         if(checked) Cookies.set('KeySaver', response.data, {expires: 7})
-        navigate('/', {replace: true})
+        navigate('/home', {replace: true})
       }
   })
   };
@@ -128,13 +126,12 @@ export default function signInForm() {
                 autoFocus
                 size='small'
               />
-              <FormControl required onFocus={resetError} error={flags.error} margin="normal" variant="outlined">
+              <FormControl required onFocus={resetError} error={flags.error} fullWidth margin="normal" variant="outlined">
                 <InputLabel size="small" htmlFor="password"> Password </InputLabel>
                 <OutlinedInput
                   id="password"
                   name="password"
                   size='small'
-                  fullWidth
                   label="Password"
                   type={flags.showPassword ? 'text' : 'password'}
                   endAdornment={

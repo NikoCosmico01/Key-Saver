@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Box, Container, Grid} from '@mui/material';
-import Navbar from './components/Navbar';
-import AccountCard from './components/AccountCard';
-import FormAddCard from './components/FormAddCard';
+import Navbar from '../components/Navbar';
+import AccountCard from '../components/AccountCard';
+import FormAddCard from '../components/FormAddCard';
 import axios from 'axios';
 import { useEffect } from 'react';
-import { useAuth } from './utils/auth';
+import { useAuth } from '../utils/auth';
 
 function Home(){
     const auth = useAuth();

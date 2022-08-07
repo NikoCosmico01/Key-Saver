@@ -6,7 +6,7 @@ export const RequireLogin = ({ children }) => {
     const navigate = useNavigate()
 
     if(auth.user) {
-        return <Navigate to='/' />
+        return <Navigate to='/home' />
     }
     return children
 }

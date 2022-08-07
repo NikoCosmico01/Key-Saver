@@ -4,7 +4,6 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import copy from "copy-to-clipboard";
 import { Component } from 'react';
@@ -61,28 +60,6 @@ export default class AccountCard extends Component{
           <CardHeader
             avatar={
                 <img height="16" width="16" src={'http://www.google.com/s2/favicons?domain=' + this.props.web} />
-            }
-            action={
-              <>
-                <IconButton aria-label="settings" onClick={this.handleClick}>
-                  <MoreVertIcon id="menuCard"/>
-                </IconButton>
-                <Menu
-                  open={this.state.open}
-                  onClose={this.handleClose}
-                  keepMounted
-                  anchorEl={this.state.anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}>
-                  <MenuItem > Modify </MenuItem>
-                </Menu>
-              </>
             }
             title={this.state.name}
             subheader={this.state.website}

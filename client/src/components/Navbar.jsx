@@ -1,9 +1,7 @@
 import * as React from 'react';
 import {Stack, AppBar, Toolbar, Typography, InputBase, IconButton, styled, alpha, Tooltip, Avatar, Menu, MenuItem} from '@mui/material';
-import { Key, PropaneSharp } from '@mui/icons-material';
-import ProfileDialog from './ProfileDialog';
+import { Key } from '@mui/icons-material';
 import SearchIcon from '@mui/icons-material/Search';
-import { useEffect } from 'react';
 import { useAuth } from '../utils/auth';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -73,7 +71,7 @@ export default function Navbar({pushData, name, surname}) {
   const handleLogout = () => {
     auth.logout()
     Cookies.remove("KeySaver")
-    navigate('/login')
+    navigate('/')
   }
 
   return (

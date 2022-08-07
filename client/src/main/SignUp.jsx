@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -12,7 +10,6 @@ import Grid from '@mui/material/Grid';
 import Axios from "axios";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -22,7 +19,7 @@ function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" component="button" onClick={() => {navigate('/login')}}>
+            <Link color="inherit" component="button" onClick={() => {navigate('/')}}>
                 Key Saver
             </Link>{' '}
             {new Date().getFullYear()}
@@ -77,7 +74,7 @@ export default function signUpForm() {
                     .post('http://localhost:5000/signup', {email: email, password: password, name: name, surname: surname})
                     .then(response => {
                         if(response.data === "OK") {
-                            navigate('/login', {replace: true})
+                            navigate('/', {replace: true})
                         }
                     })
                 }
@@ -140,13 +137,12 @@ export default function signUpForm() {
                             autoFocus
                             size='small'
                         />
-                        <FormControl required onFocus= {resetPW} error = {flags.wrongPassword} margin="normal" variant="outlined">
+                        <FormControl required onFocus= {resetPW} error = {flags.wrongPassword} fullWidth margin="normal" variant="outlined">
                             <InputLabel size="small" htmlFor="password"> Password </InputLabel>
                             <OutlinedInput
                             id="password"
                             name="password"
                             size='small'
-                            fullWidth
                             label="Password"
                             type={flags.showPassword ? 'text' : 'password'}
                             endAdornment={
@@ -163,13 +159,12 @@ export default function signUpForm() {
                             }
                             />
                         </FormControl>
-                        <FormControl required onFocus= {resetPW} error = {flags.wrongPassword} margin="normal" variant="outlined">
+                        <FormControl required onFocus= {resetPW} error = {flags.wrongPassword} fullWidth margin="normal" variant="outlined">
                             <InputLabel size="small" htmlFor="password"> Password Repeat</InputLabel>
                             <OutlinedInput
                             id="repeatPassword"
                             name="repeatPassword"
                             size='small'
-                            fullWidth
                             label="Password Repeat"
                             type={flags.showPassword ? 'text' : 'password'}
                             endAdornment={

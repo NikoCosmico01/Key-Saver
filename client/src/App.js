@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Route, Routes} from 'react-router-dom';
 import { RequireAuth } from './components/RequireAuth';
-import Home from "./Home";
-import Login from "./Login";
-import SignUp from './SignUp';
+import Home from "./main/Home";
+import Login from "./main/Login";
+import SignUp from './main/SignUp';
 import { AuthProvider, useAuth } from './utils/auth';
 import Cookies from 'js-cookie';
 import { RequireLogin } from './components/RequireLogin';
@@ -20,8 +20,8 @@ function App() {
     return (
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<RequireAuth> <Home /> </RequireAuth>} />
-          <Route path="/login" element={<RequireLogin> <Login /> </RequireLogin>} />
+          <Route path="/home" element={<RequireAuth> <Home /> </RequireAuth>} />
+          <Route path="/" element={<RequireLogin> <Login /> </RequireLogin>} />
           <Route path="/registration" element={<SignUp />} />
         </Routes>
       </BrowserRouter>
