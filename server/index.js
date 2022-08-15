@@ -18,10 +18,10 @@ var router = express.Router();
 
 const mysql = require('mysql')
 const db = mysql.createConnection({
-  user: 'root',
-  host: 'localhost',
-  password: '',
-  database: 'PasswordManager'
+  user: 'b102e8ad37cfb9',
+  host: 'eu-cdbr-west-03.cleardb.net',
+  password: '151a2b9a',
+  database: 'heroku_4b9e65ab7d31764'
 });
 
 db.connect(function(err) {
