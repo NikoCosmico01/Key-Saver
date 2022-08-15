@@ -21,7 +21,7 @@ function Home(){
 
     useEffect(() => {
         axios
-        .get('http://localhost:5000/user', {params: {user: auth.user}})
+        .get('https://key-saver.herokuapp.com/user', {params: {user: auth.user}})
         .then(response => {
             setUser({
                 name: response.data['Name'],
@@ -30,7 +30,7 @@ function Home(){
         })
 
         axios
-        .get('http://localhost:5000/search', {params: {user: auth.user}})
+        .get('https://key-saver.herokuapp.com/search', {params: {user: auth.user}})
         .then(response => {setValues({
             ...values,
             allAccounts: response.data, 
@@ -39,7 +39,7 @@ function Home(){
 
     const updateScreen = () => {
         axios
-        .get('http://localhost:5000/search', {params: {user: auth.user}})
+        .get('https://key-saver.herokuapp.com/search', {params: {user: auth.user}})
         .then(response => {setValues({
             ...values,
             allAccounts: response.data,
@@ -62,7 +62,7 @@ function Home(){
 
     const handleDeleteAccount = (idCard) => {
         axios
-        .get('http://localhost:5000/deleteAccount', {params: {id: idCard}})
+        .get('https://key-saver.herokuapp.com/deleteAccount', {params: {id: idCard}})
         .then(response => {
             if(response.data == "OK"){
                 updateScreen();
