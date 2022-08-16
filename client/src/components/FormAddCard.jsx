@@ -100,7 +100,7 @@ export default function FormAddCard(props) {
   const addPassword = () => {
     const isValid = CheckAccount();
     if(isValid){
-      Axios.post('http://localhost:5000/addpassword', {name: values.name, web: values.web, mail:values.mail, user: values.user, password: values.password, id: props.user});
+      Axios.post('https://key-saver.herokuapp.com/addpassword', {name: values.name, web: values.web, mail:values.mail, user: values.user, password: values.password, id: props.user});
     setOpen(false);
     flags.editNameField = false;
     clearValues()
