@@ -56,7 +56,7 @@ export default function signUpForm() {
         const surname = data.get('surname');
         const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(email.match(regex)) {
-            Axios.get('https://key-saver.herokuapp.com/checksignup', { params: {email: email}} )
+            Axios.get('http://localhost:5000/checksignup', { params: {email: email}} )
             .then(response => {
                 responseLength = response.data.length
                 console.log(responseLength)
@@ -72,7 +72,7 @@ export default function signUpForm() {
                 } 
                 if (finalResult === 0) {
                     Axios
-                    .post('https://key-saver.herokuapp.com/signup', {email: email, password: password, name: name, surname: surname})
+                    .post('http://localhost:5000/signup', {email: email, password: password, name: name, surname: surname})
                     .then(response => {
                         if(response.data === "OK") {
                             navigate('/', {replace: true})

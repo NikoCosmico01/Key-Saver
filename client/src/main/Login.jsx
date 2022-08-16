@@ -50,7 +50,7 @@ export default function signInForm() {
     const data = new FormData(event.currentTarget);
     const email = data.get('email');
     const password = data.get('password');
-    Axios.get('https://key-saver.herokuapp.com/checklogin', { params: { email: email, password: password }} )
+    Axios.get('http://localhost:5000/checklogin', { params: { email: email, password: password }} )
     .then(response => {
       if (response.data === "Error") {
         setFlags({error: true})
