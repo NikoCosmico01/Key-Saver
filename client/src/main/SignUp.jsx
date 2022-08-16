@@ -46,7 +46,7 @@ export default function signUpForm() {
 
     const handleSubmit = (event) => {
         let finalResult = 0
-        let responseLength = ""
+        let responseLength = 0
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const email = data.get('email');
@@ -59,6 +59,7 @@ export default function signUpForm() {
             Axios.get('https://key-saver.herokuapp.com/checksignup', { params: {email: email}} )
             .then(response => {
                 responseLength = response.data.length
+                console.log(responseLength)
                 })
             setTimeout(() => {
                 if (responseLength > 0) {
