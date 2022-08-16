@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Ago 16, 2022 alle 16:42
+-- Creato il: Ago 16, 2022 alle 16:44
 -- Versione del server: 10.4.24-MariaDB
 -- Versione PHP: 8.1.6
 
@@ -71,7 +71,6 @@ CREATE TABLE `passwords` (
 INSERT INTO `passwords` (`ID`, `Name`, `Web`, `Mail`, `User`, `Password`, `IV`, `UniqueID`) VALUES
 (7, 'Facebook', 'www.Facebook.It', 'info@pollame.it', 'FacePoll', '3057d507acff31fbdce5b09cd0dd9f20', '9dc712992d10b6e1b36f4daa4f238e02', 16),
 (8, 'Spotify', 'www.spotify.it', 'lecosebelle@gmail.com', 'siamoBelli', '93c4c5a82c8f7d7f40b11a567cc784975aad0ed3f104d533', '2afe16fb7a62d4256111d59884f7eb40', 16),
-(9, 'Google', 'www.google.it', 'sucabliet@gmail.com', 'IBliettosi', '4521f7be5c3ccf3ee47d4f6471330dd6b0c49699', '72a393049ba7631808ced7fa90746aba', 16),
 (12, 'birrificiogregorio', 'https://www.birrificiogregorio.it/', 'andreaoppici2000@gmail.com', 'andreaoppici2000@gmail.com', '7d938a6059457aeb63', '8676575119870a2b15a9529745d6d58a', 16),
 (13, 'birrificiogregorio', 'https://www.birrificiogregorio.it/', 'andreaoppici2000@gmail.com', 'andreaoppici2000@gmail.com', '036879944ca1', 'b9f2ed0ee418bd504a1de9d700cad852', 19),
 (21, 'birrificioargo', 'https://birrificioargo.com/', 'andreaoppici2000@gmail.com', 'andreaoppici2000@gmail.com', 'ffd37f934c', '1c8961b5c405eb2b167b6bb115c24399', 16),
